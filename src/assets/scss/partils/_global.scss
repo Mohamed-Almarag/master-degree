@@ -1,0 +1,126 @@
+@import "./colors";
+@import "./variables";
+@import "./classes";
+
+%button {
+  transition: 0.3s;
+  outline: none;
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    border-color: $maincolor;
+    // box-shadow: inset -4em 0 0 0 $maincolor, inset 4em 0 0 0 $maincolor;
+    // color: #fff;
+  }
+  &:focus {
+    outline: none;
+  }
+  a {
+    border-radius: 5px;
+    border: 1px solid $bordercolor;
+    padding: 4px 8px;
+    text-decoration: none;
+    color: $textcolor;
+    transition: 0.5s;
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+%form-group {
+  width: 70%;
+  margin: 0 auto 30px;
+}
+
+%form-label {
+  margin-bottom: 15px;
+}
+
+%input-container {
+  border: 1px solid $bordercolor;
+}
+%form-input {
+  width: 95%;
+  border: none;
+  padding: 7px;
+  outline: none;
+  color: $textcolor;
+}
+%form-icon {
+  width: 4%;
+  color: $textcolor;
+}
+%form-submit-button {
+  background-color: $maincolor;
+  color: $white;
+  width: 170px;
+  margin: auto;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 12px rgba($black, 0.2);
+}
+
+%before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background-color: rgba($black, 0.5);
+}
+%p {
+  color: $textcolor;
+  line-height: 2;
+}
+%title {
+  margin-bottom: 30px;
+  color: $headcolor;
+  font-size: 1.7rem;
+}
+
+%title-page {
+  position: relative;
+  z-index: 2;
+  color: $white;
+  text-align: center;
+  font: {
+    size: 5rem;
+    weight: 700;
+  }
+}
+%section-title {
+  margin-bottom: 70px;
+  font-size: 2rem;
+  color: $maincolor;
+  font-weight: bold;
+}
+
+// scroll bar and selection
+::selection {
+  background-color: $secondcolor;
+  color: $white;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 11px;
+}
+::-webkit-scrollbar-button {
+  width: 5px;
+  height: 0px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to top right, $maincolor, rgba($maincolor, 0.5));
+  border: 0px solid transparent;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+  background: $bgcard;
+  border: 0px none $white;
+  border-radius: 53px;
+}

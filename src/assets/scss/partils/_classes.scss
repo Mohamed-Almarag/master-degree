@@ -1,0 +1,58 @@
+.view-padding {
+  padding: $padding 0 0;
+}
+// these classes speacily for registration
+.ask-account {
+  .message {
+    margin: 0 10px;
+    color: $textcolor;
+  }
+  .router-link-page {
+    color: $maincolor;
+    transition: $transition;
+    &:hover {
+      color: $secondcolor;
+      text-decoration: none;
+    }
+  }
+}
+
+.custom-btn {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: $radius;
+  background-color: $maincolor;
+  transition: $transition;
+  width: 170px;
+  margin: auto;
+  text-align: center;
+  color: $white;
+  &:hover {
+    background-color: $secondcolor;
+  }
+  &.link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.main-form-title {
+  color: $maincolor;
+  text-shadow: $text-shadow;
+}
+.submit-form-btn {
+  width: 50%;
+  padding: 10px 0;
+  margin: 50px auto;
+  border: none;
+  border-radius: 25px;
+  background-color: $maincolor;
+  color: $white;
+  box-shadow: $box-shadow;
+  transition: $transition;
+  &:hover {
+    background-color: $secondcolor;
+  }
+}
