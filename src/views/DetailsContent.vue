@@ -21,7 +21,6 @@ export default {
     onMounted(() => {
       store.dispatch("Module/getModels").then((res) => {
         modules.value = res.data.data;
-        console.log(modules);
       });
     });
     return { modules };
