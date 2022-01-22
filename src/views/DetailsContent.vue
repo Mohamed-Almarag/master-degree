@@ -8,7 +8,7 @@
 import EducationalModules from "@/components/DetailsContentPage/EducationalModules.vue";
 // import { ref } from "vue";
 import { useStore } from "vuex";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 export default {
   name: "DetailsContent",
@@ -18,11 +18,11 @@ export default {
   setup() {
     const store = useStore();
     const modules = ref([]);
-    onMounted(() => {
-      store.dispatch("Module/getModels").then((res) => {
-        modules.value = res.data.data;
-      });
+
+    store.dispatch("Module/getModels").then((res) => {
+      modules.value = res.data.data;
     });
+
     return { modules };
   },
 };
