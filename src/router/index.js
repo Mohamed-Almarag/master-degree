@@ -4,30 +4,43 @@ import LearningStyle from "@/components/DetailsContentPage/LearningStyle.vue";
 import SingleModule from "@/components/SingleModule/SingleModule.vue";
 import SignUp from "@/components/Registration/SignUp.vue";
 import LogIn from "@/components/Registration/LogIn.vue";
+import auth from "@/auth/authService";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/about",
     name: "About",
     component: () =>
       import(/* webpackChunkName: "About" */ "@/views/About.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/instructions",
     name: "Instructions",
     component: () =>
       import(/* webpackChunkName: "Instructions" */ "@/views/Instructions.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/library",
     name: "Library",
     component: () =>
       import(/* webpackChunkName: "Library" */ "@/views/Library.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/library/:id",
@@ -36,12 +49,18 @@ const routes = [
       import(
         /* webpackChunkName: "SingleModuleResorses" */ "@/components/ViewsPages/Library/SingleModuleResorses.vue"
       ),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/objectivies",
     name: "Objectivies",
     component: () =>
       import(/* webpackChunkName: "Objectivies" */ "@/views/Objectivies.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/details-content",
@@ -50,6 +69,9 @@ const routes = [
       import(
         /* webpackChunkName: "DetailsContent" */ "@/views/DetailsContent.vue"
       ),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/details-content/:id",
@@ -61,34 +83,66 @@ const routes = [
     path: "/learning-style",
     name: "LearningStyle",
     component: LearningStyle,
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/contact-us",
     name: "ContactUs",
     component: () =>
       import(/* webpackChunkName: "ContactUs" */ "@/views/ContactUs.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/profile",
     name: "Profile",
     component: () =>
       import(/* webpackChunkName: "ContactUs" */ "@/views/Profile.vue"),
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: "/sign-up",
     name: "SignUp",
     component: SignUp,
+    meta: {
+      authRequired: false,
+    },
   },
   {
     path: "/login",
     name: "LogIn",
     component: LogIn,
+    meta: {
+      authRequired: false,
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(`Navigating to: ${to.name}`);
+  console.log(`Navigating to meta : ${to.meta.authRequired}`);
+  console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
+  if (to.meta.authRequired) {
+    if (!auth.isAuthenticated()) {
+      return router.push({ path: "login", query: { to: to.path } });
+    }
+  }
+  if (to.meta.login) {
+    if (auth.isAuthenticated()) {
+      return router.push({ path: "/groups" });
+    }
+  }
+  return next();
 });
 
 export default router;

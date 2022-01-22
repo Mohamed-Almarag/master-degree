@@ -15,7 +15,7 @@
           >
             <div class="card-container">
               <div class="photo">
-                <img :src="item.img" :alt="item.name" class="img w-100 h-100" />
+                <img :src="item.image" :alt="item.image" class="img w-100 h-100" />
                 <div
                   class="
                     go-to-details
@@ -44,58 +44,15 @@
 </template>
 
 <script>
-import { ref } from "vue";
+// import { ref } from "vue";
 
 export default {
   name: "EducationalModules",
   components: {},
-  setup() {
-    const modules = ref([
-      {
-        id: 1,
-        name: "الموديول الاول",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWVZUr.png",
-      },
-      {
-        id: 2,
-        name: "الموديول الثانى",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWfxby.png",
-      },
-      {
-        id: 3,
-        name: "الموديول الثالث",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWVZUr.png",
-      },
-      {
-        id: 4,
-        name: "الموديول الرابع",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWVZUr.png",
-      },
-      {
-        id: 5,
-        name: "الموديول الخامس",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWfxby.png",
-      },
-      {
-        id: 6,
-        name: "الموديول السادس",
-        description:
-          "يمكنك الاطلاع على جميع المصادر وامراجع الخاصه بكل ما يتعلق بمصادر ومراجع الموديول الاول",
-        img: "https://i.im.ge/2021/12/09/oWkJMJ.png",
-      },
-    ]);
-    return { modules };
+  props: {
+    modules: Array,
   },
+  setup() {},
 };
 </script>
 

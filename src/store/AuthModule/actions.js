@@ -5,7 +5,7 @@ export default {
     await postMethods("student/register", payload)
       .then((response) => {
         console.log(response);
-        if (response.status == 200) {
+        if (response.status === 200) {
           commit("SET_USER_AUTHENTICATION", response.data);
         }
       })
@@ -18,10 +18,11 @@ export default {
     return await postMethods("student/login", payload)
       .then((response) => {
         let studentData = response.data;
-        if (response.status == 200) {
+        if (response.status === 200) {
           commit("SET_USER_AUTHENTICATION", response);
           commit("SET_TOKEN", response.data.token);
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("loggedIn", "true");
           localStorage.setItem("student-data", JSON.stringify(studentData));
         }
       })
@@ -33,6 +34,7 @@ export default {
   },
   logOut({ commit }) {
     localStorage.removeItem("token");
+    localStorage.setItem("loggedIn", "false");
     localStorage.removeItem("student-data");
     commit("LOG_OUT");
   },
