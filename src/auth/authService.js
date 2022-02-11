@@ -32,6 +32,10 @@ class AuthService extends EventEmitter {
   isAuthenticated() {
     return localStorage.getItem(localStorageKey) === "true";
   }
+  checkCategory() {
+    let student = JSON.parse(localStorage.getItem("student-data"));
+    return student.category_id != null;
+  }
 }
 
 export default new AuthService();

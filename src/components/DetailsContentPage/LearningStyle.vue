@@ -28,15 +28,15 @@
             >
               <div class="options-item d-flex align-items-center">
                 <input
+                  @click.stop="dataPush(item.questionnaire_id, item.id)"
                   class="radio-input d-block"
                   @change="testing(item)"
                   type="radio"
-                  :name="item.id"
+                  :name="item.questionnaire_id"
                   :id="item.id"
                   :value="item.title"
-                  v-model="optionValue[index[item]]"
                 />
-                <label class="label d-block" :for="item.title">{{
+                <label class="label d-block" :for="item.id">{{
                   item.title
                 }}</label>
               </div>
@@ -44,6 +44,12 @@
           </div>
         </div>
       </div>
+      <input
+        type="button"
+        @click.stop="submit"
+        class="btn btn-primary"
+        value="ارسال"
+      />
     </div>
   </div>
 </template>
@@ -57,15 +63,29 @@ export default {
   setup() {
     const store = useStore();
     const optionValue = ref([]);
+    const questions = reactive([]);
+    const formData = new FormData();
     const optionsHere = reactive([]);
     function testing(item) {
       optionsHere.push(item);
       console.log(optionsHere);
     }
 
+    function dataPush(questionId, optionId) {
+      questions[questionId] = optionId;
+    }
+
+    function submit() {
+      questions.forEach((value, index) => {
+        formData.append(`questions[${index}]`, value);
+      });
+      store.dispatch("Questionaire/submitQuestionaires", formData);
+    }
+
     const questionaires = computed(() => {
       return store.state.Questionaire.questionaires;
     });
+
     onMounted(() => {
       store.dispatch("Questionaire/getQuestionaires").then((res) => {
         console.log(res);
@@ -76,7 +96,15 @@ export default {
     // questions[1]==option id
     // questions[2]
     // questions[3]
-    return { questionaires, optionValue, testing, optionsHere };
+    return {
+      questionaires,
+      optionValue,
+      testing,
+      optionsHere,
+      questions,
+      dataPush,
+      submit,
+    };
   },
   components: {},
 };

@@ -4,7 +4,7 @@ import LearningStyle from "@/components/DetailsContentPage/LearningStyle.vue";
 import SingleModule from "@/components/SingleModule/SingleModule.vue";
 import SignUp from "@/components/Registration/SignUp.vue";
 import LogIn from "@/components/Registration/LogIn.vue";
-// import auth from "@/auth/authService";
+import auth from "@/auth/authService";
 
 const routes = [
   {
@@ -128,21 +128,23 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   console.log(`Navigating to: ${to.name}`);
-//   console.log(`Navigating to meta : ${to.meta.authRequired}`);
-//   console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
-//   if (to.meta.authRequired) {
-//     if (!auth.isAuthenticated()) {
-//       return router.push({ path: "login", query: { to: to.path } });
-//     }
-//   }
-//   if (to.meta.login) {
-//     if (auth.isAuthenticated()) {
-//       return router.push({ path: "/groups" });
-//     }
-//   }
-//   return next();
-// });
+router.beforeEach((to, from, next) => {
+  console.log(`Navigating to: ${to.name}`);
+  console.log(`Navigating to meta : ${to.meta.authRequired}`);
+  console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
+  if (to.meta.authRequired) {
+    if (!auth.isAuthenticated()) {
+      return router.push({ path: "login", query: { to: to.path } });
+    } else if (auth.isAuthenticated() && auth.checkCategory()) {
+      return router.push({ path: "learning-style", query: { to: to.path } });
+    }
+  }
+  if (to.meta.login) {
+    if (auth.isAuthenticated()) {
+      return router.push({ path: "/groups" });
+    }
+  }
+  return next();
+});
 
 export default router;
