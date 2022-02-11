@@ -87,15 +87,9 @@ export default {
     });
 
     onMounted(() => {
-      store.dispatch("Questionaire/getQuestionaires").then((res) => {
-        console.log(res);
-      });
+      store.dispatch("Questionaire/getQuestionaires")
     });
-    // []
 
-    // questions[1]==option id
-    // questions[2]
-    // questions[3]
     return {
       questionaires,
       optionValue,
