@@ -3,33 +3,9 @@ import Api from "./axios";
 // import router from "../router";
 // import store from "../store";
 // Start Get Helper Mthods
-export function getMethods(uri, params) {
-  let defultParams = {
-    limit: 10,
-    offset: 0,
-    field: "id",
-    // I Changed it from [desc] to [asc] == to start from first index
-    sort: "desc",
-    resource: "all",
-    deleted: "false",
-    paginate: "true",
-    columns: ["active"],
-    operand: ["="],
-    column_values: [1],
-  };
-
-  if (typeof defultParams !== undefined) {
-    defultParams = {
-      ...defultParams,
-      ...params,
-    };
-  }
-
+export function getMethods(uri) {
   return new Promise((resolve, reject) => {
     Api.get(`${uri}`, {
-      params: {
-        ...defultParams,
-      },
       headers: {
         language: localStorage.getItem("lang"),
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -46,20 +22,9 @@ export function getMethods(uri, params) {
           error.response.status == 400
             ? console.log(error.response.data.message)
             : "no";
-          // if (error.response.status == 401) {
-          //   store.dispatch("auth/LogoutModule/logout").then(() => {
-          //     // window.location.reload();
-          //     alert("you can not access this page without login");
-          //     router.push("/registration");
-          //   });
-          // } else {
-          //   console.log("no");
-          // }
-          error.response.status == 401 //
+          error.response.status == 401
             ? console.log(error.response.data.message)
-            : // router.push("/registration")
-              // alert(error.response.data.message)
-              "no";
+            : "no";
           error.response.status == 404
             ? console.log(error.response.data.message)
             : "no";
@@ -67,7 +32,6 @@ export function getMethods(uri, params) {
             ? console.log(error.response.data.message)
             : "no";
         }
-
         reject(error);
       });
   });

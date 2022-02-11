@@ -17,6 +17,10 @@ import {
   faGraduationCap,
   faHeart,
   faArrowUp,
+  faQuestion,
+  faCamera,
+  faTimes,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faYoutube,
@@ -39,7 +43,11 @@ library.add(
   faMapMarkerAlt,
   faGraduationCap,
   faHeart,
-  faArrowUp
+  faArrowUp,
+  faQuestion,
+  faCamera,
+  faTimes,
+  faPen
 );
 
 const app = createApp(App);

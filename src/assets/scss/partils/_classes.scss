@@ -16,6 +16,21 @@
     }
   }
 }
+.main-pages-title {
+  position: relative;
+  z-index: 2;
+  color: $white;
+  text-align: center;
+  font: {
+    size: 5rem;
+    weight: 700;
+  }
+}
+.main-section-title {
+  color: $maincolor;
+  margin-bottom: 30px;
+  text-shadow: $text-shadow;
+}
 
 .custom-btn {
   border: none;
@@ -28,12 +43,23 @@
   margin: auto;
   text-align: center;
   color: $white;
+  &.profile {
+    margin: 0;
+  }
   &:hover {
     background-color: $secondcolor;
   }
   &.link {
     &:hover {
       text-decoration: none;
+    }
+  }
+  &.img-btn {
+    width: 100px;
+    &.cancel {
+      &:hover {
+        background-color: $cancel;
+      }
     }
   }
 }
@@ -54,5 +80,53 @@
   transition: $transition;
   &:hover {
     background-color: $secondcolor;
+  }
+}
+
+.edit-icon {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  box-shadow: $box-shadow;
+  line-height: 30;
+  border-radius: 50%;
+  padding: 7px;
+  cursor: pointer;
+  transition: $transition;
+  color: $textcolor;
+  &.edit {
+    &:hover {
+      background-color: $secondcolor;
+      color: $white;
+    }
+  }
+  &.cancel {
+    right: 10px;
+    &:hover {
+      background-color: $cancel;
+      color: $white;
+    }
+  }
+}
+.clip-path {
+  &.fade-enter-from {
+    clip-path: circle(0);
+  }
+  &.fade-enter-to {
+    clip-path: circle(100%);
+  }
+  &.fade-enter-active {
+    transition: clip-path 0.5s ease-in-out;
+  }
+  &.fade-leave-from {
+    clip-path: circle(100%);
+  }
+  &.fade-leave-to {
+    clip-path: circle(0);
+  }
+  &.fade-leave-active {
+    transition: clip-path 0.5s ease-in-out;
   }
 }

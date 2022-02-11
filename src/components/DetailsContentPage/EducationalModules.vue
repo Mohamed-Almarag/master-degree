@@ -1,10 +1,5 @@
 <template>
   <div class="educational-modules">
-    <DescriptionPages bgImage="library">
-      <template #title>
-        <h2 class="title-page h1">الموديولات التعليميه</h2>
-      </template>
-    </DescriptionPages>
     <div class="modules">
       <div class="container">
         <div class="row">
@@ -15,7 +10,11 @@
           >
             <div class="card-container">
               <div class="photo">
-                <img :src="item.image" :alt="item.image" class="img w-100 h-100" />
+                <img
+                  :src="item.image"
+                  :alt="item.image"
+                  class="img w-100 h-100"
+                />
                 <div
                   class="
                     go-to-details
@@ -30,7 +29,7 @@
                 <p class="text">{{ item.description }}</p>
                 <router-link
                   class="d-block link custom-btn"
-                  :to="`/details-content/${item.id}`"
+                  :to="`/${linkName}/${item.id}`"
                 >
                   المزيد</router-link
                 >
@@ -51,6 +50,7 @@ export default {
   components: {},
   props: {
     modules: Array,
+    linkName: String,
   },
   setup() {},
 };
@@ -58,9 +58,6 @@ export default {
 
 <style lang="scss" scoped>
 .educational-modules {
-  .title-page {
-    @extend %title-page;
-  }
   .modules {
     padding: 120px 0 80px;
     .cards {

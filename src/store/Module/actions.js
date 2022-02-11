@@ -7,6 +7,7 @@ export default {
       getMethods("/student/modules")
         .then((response) => {
           commit("SET_MODELS", response.data.data);
+
           resolve(response);
         })
         .catch((error) => {
