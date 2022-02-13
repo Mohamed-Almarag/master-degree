@@ -1,6 +1,7 @@
 export default {
   models: (state) => state.models,
-  // success: (state) => state.success,
-  // signUpErrors: (state) => state.signUpErrors,
-  // token: (state) => state.token,
+  singleModule: (state) => state.singleModule,
+  exams: (state) => state.exams,
+  examQuestions: (state) => state.examQuestions,
+  submitExam: (state) => state.submitExam,
 };

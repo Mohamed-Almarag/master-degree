@@ -1,13 +1,5 @@
 <template>
   <div class="single-elementk">
-    <fa icon="coffee" />
-    <fa icon="user" />
-    <fa icon="dove" />
-    <fa icon="window-close" />
-    <fa :icon="['fas', 'coffee']" />
-    <fa :icon="['fab', 'youtube']" />
-    <fa :icon="['fab', 'github']" />
-    <h1>content</h1>
     <div class="container-links">
       <a class="test" href="https://google.com">todos</a>
       <p>

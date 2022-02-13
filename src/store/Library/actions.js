@@ -1,5 +1,5 @@
 import { postMethods } from "@/axios/helpers";
-// getMethods
+
 export default {
   async getBooks({ commit }, payload) {
     return await new Promise((resolve, reject) => {
