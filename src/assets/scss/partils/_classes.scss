@@ -130,3 +130,88 @@
     transition: clip-path 0.5s ease-in-out;
   }
 }
+
+// global style for questions in learning style component and module exams
+.all-questions {
+  .every-questions {
+    margin-bottom: 40px;
+    padding: 20px;
+    // box-shadow: $simple-shadow;
+    .title {
+      margin-bottom: 25px;
+      color: $headcolor;
+      .icons {
+        background-color: $maincolor;
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+        box-shadow: $box-shadow;
+        margin: 0 0 0 10px;
+      }
+    }
+    .question-options-container {
+      gap: 30px;
+      // margin-bottom: 40px;
+      .options-lists {
+        .options-item {
+          color: $textcolor;
+          .radio-input {
+            margin: 0 0 0 5px;
+            appearance: none;
+            background-color: $white;
+            cursor: pointer;
+            width: 0.9em;
+            height: 0.9em;
+            border: 1px solid $bordercolor;
+            border-radius: 50%;
+            transition: $transition;
+            &:checked {
+              background-color: $secondcolor;
+              border-color: $secondcolor;
+            }
+          }
+          .label {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// style for exams and library books
+.main-card-container {
+  box-shadow: $simple-shadow;
+  padding: 20px 10px;
+  border-radius: $radius;
+  transition: $transition;
+
+  &:hover {
+    background-color: $bgcard;
+  }
+  &.resources {
+    &:hover {
+      .download {
+        background-color: $white;
+      }
+    }
+    .download {
+      color: $textcolor;
+      padding: 5px 20px;
+      border-radius: 5px;
+      background-color: $bgcard;
+      transition: $transition;
+      &:hover {
+        text-decoration: none;
+        background-color: $secondcolor;
+        color: $white;
+      }
+      .icon {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+  .title {
+    color: $textcolor;
+  }
+}

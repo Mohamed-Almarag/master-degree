@@ -3,13 +3,25 @@
     <div class="container">
       <div class="row">
         <div
-          class="books mb-4 col-md-6"
+          class="books mb-5 col-md-6"
           v-for="book in resourses"
           :key="book.id"
         >
-          <div class="book-container">
+          <div
+            class="
+              resources
+              main-card-container
+              d-flex
+              justify-content-between
+              align-items-center
+              flex-wrap
+            "
+          >
             <h6 class="title">{{ book.title }}</h6>
-            <a :href="book.file" download>Download</a>
+            <a class="d-block download" :href="book.file" download>
+              <span>تحميل</span>
+              <fa class="icon" icon="download" />
+            </a>
           </div>
         </div>
       </div>
@@ -18,13 +30,12 @@
 </template>
 
 <script>
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, computed } from "vue";
 export default {
   name: "SingleModuleResorses",
   setup() {
-    const router = useRouter();
     const route = useRoute();
     const moduleId = route.params.id;
     const store = useStore();
@@ -33,22 +44,10 @@ export default {
     });
     onMounted(() => {
       store.dispatch("Library/getBooks", { module_id: moduleId });
-      //
     });
-    return { router, route, resourses };
+    return { route, resourses };
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.books {
-  .book-container {
-    box-shadow: $simple-shadow;
-    padding: 20px 10px;
-    border-radius: $radius;
-    .title {
-      color: $textcolor;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

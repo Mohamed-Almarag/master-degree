@@ -1,5 +1,5 @@
 <template>
-  <div class="single-module">
+  <div class="single-module view-padding">
     <div class="container">
       <div class="content-container">
         <div class="tabs-buttons">
@@ -80,7 +80,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { ref, onMounted, computed } from "vue";
 import TheObjectives from "@/components/SingleModuleElements/TheObjectives.vue";
 import TheContent from "@/components/SingleModuleElements/TheContent.vue";
 import TheActivities from "@/components/SingleModuleElements/TheActivities.vue";
@@ -95,53 +97,63 @@ export default {
     TheSummary,
     TheQuestions,
   },
+
   setup() {
-    const activeComponent = ref("TheObjectives");
-    return { activeComponent };
+    const store = useStore();
+    const activeComponent = ref("TheQuestions");
+    const route = useRoute();
+    const module_id = route.params.id;
+    const category_id = 2;
+    const moduleData = computed(() => {
+      return store.state.Module.singleModule;
+    });
+    onMounted(() => {
+      store.dispatch("Module/getSingleModuleData", {
+        module_id: module_id,
+        category_id: category_id,
+      });
+      store.dispatch("Module/getExams", {
+        module_id: module_id,
+      });
+      // store.dispatch("Module/getModuleExamQuetions", {
+      //   module_id: module_id,
+      // });
+    });
+    return { moduleData, activeComponent };
   },
 };
 </script>
 <style lang="scss" scoped>
 .single-module {
-  padding: 70px 0;
-  height: 100vh;
-  // background-color: #e6e6e6;
   .content-container {
-    // background-color: #fff;
     .tabs-buttons {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      padding: 20px 0;
-      background-color: #8a8a8a;
-      gap: 30px;
+      padding: 20px;
+      background-color: $bgcard;
+      border-radius: $radius;
+
       .switch-button {
         padding: 10px 35px;
         border: none;
-        background-color: #fff;
+        background-color: $white;
         border-radius: 5px;
-        color: #6d6b6b;
-        transition: 0.3s;
+        color: $textcolor;
+        transition: $transition;
         outline: none;
-        // box-shadow: inset 6.5em 0 0 0 #000;
-        &:hover,
-        &:focus {
-          // box-shadow: inset 8em 0 0 0 #ffc107;
-          box-shadow: inset -4em 0 0 0 #004773, inset 4em 0 0 0 #004773;
-          // box-shadow: inset -4em 0 0 0 #ffc107, inset 4em 0 0 0 #ffc107;
-          color: #fff;
-        }
-        &.active {
-          background-color: #ffc107;
-          color: #fff;
-          // background-color: #d39e00;
+        border-radius: $radius;
+        &.active,
+        &:hover {
+          background-color: $maincolor;
+          color: $white;
         }
       }
     }
     .active-component {
       padding: 25px 10px;
-      color: #6d6b6b;
+      color: $textcolor;
     }
   }
 }

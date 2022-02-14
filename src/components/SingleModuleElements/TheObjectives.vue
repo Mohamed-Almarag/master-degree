@@ -1,25 +1,22 @@
 <template>
   <div class="the-objectives">
-    <h1>الاهداف</h1>
-    <div v-for="(item, index) in data" :key="index">
-      <p>{{ item }}</p>
+    <div v-for="item in moduleData" :key="item.id">
+      <p v-html="item.objectives"></p>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "TheObjectives",
   setup() {
-    const data = ref([
-      "تعريف الفيديو الرقمي",
-      "مزايا الفيديو التعليمي الرقمي",
-      "فوائد استخدام الفيديو التعليمي الرقمي في العملية التعليمية",
-      "تحليل الحاجات التعليمية للمتعلمين المستهدفين من الفيديو التعليمي الرقمي",
-      "تحليل خصائص المتعلمين المستهدفين من الفيديو التعليمي الرقمي",
-    ]);
-    return { data };
+    const store = useStore();
+    const moduleData = computed(() => {
+      return store.state.Module.singleModule;
+    });
+    return { moduleData };
   },
 };
 </script>

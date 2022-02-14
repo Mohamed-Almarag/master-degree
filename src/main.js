@@ -21,6 +21,7 @@ import {
   faCamera,
   faTimes,
   faPen,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faYoutube,
@@ -47,7 +48,8 @@ library.add(
   faQuestion,
   faCamera,
   faTimes,
-  faPen
+  faPen,
+  faDownload
 );
 
 const app = createApp(App);

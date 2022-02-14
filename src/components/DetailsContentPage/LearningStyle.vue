@@ -30,7 +30,6 @@
                 <input
                   @click.stop="dataPush(item.questionnaire_id, item.id)"
                   class="radio-input d-block"
-                  @change="testing(item)"
                   type="radio"
                   :name="item.questionnaire_id"
                   :id="item.id"
@@ -47,7 +46,7 @@
       <input
         type="button"
         @click.stop="submit"
-        class="btn btn-primary"
+        class="custom-btn"
         value="ارسال"
       />
     </div>
@@ -66,10 +65,6 @@ export default {
     const questions = reactive([]);
     const formData = new FormData();
     const optionsHere = reactive([]);
-    function testing(item) {
-      optionsHere.push(item);
-      console.log(optionsHere);
-    }
 
     function dataPush(questionId, optionId) {
       questions[questionId] = optionId;
@@ -93,7 +88,6 @@ export default {
     return {
       questionaires,
       optionValue,
-      testing,
       optionsHere,
       questions,
       dataPush,
@@ -107,54 +101,5 @@ export default {
 <style lang="scss" scoped>
 .learning-style {
   padding-bottom: 70px;
-  .all-questions {
-    .every-questions {
-      margin-bottom: 40px;
-      padding: 20px;
-      // box-shadow: $simple-shadow;
-      .title {
-        margin-bottom: 25px;
-        color: $headcolor;
-        .icons {
-          background-color: $maincolor;
-          width: 20px;
-          height: 20px;
-          padding: 4px;
-          box-shadow: $box-shadow;
-          margin: 0 0 0 10px;
-        }
-      }
-      .question-options-container {
-        gap: 30px;
-        // margin-bottom: 40px;
-        .options-lists {
-          .options-item {
-            color: $textcolor;
-            .radio-input {
-              margin: 0 0 0 5px;
-              appearance: none;
-              // margin: 0;
-              background-color: $white;
-              cursor: pointer;
-              width: 0.9em;
-              height: 0.9em;
-              border: 1px solid $bordercolor;
-              border-radius: 50%;
-              transition: $transition;
-              // &:hover,
-              &:checked {
-                background-color: $secondcolor;
-                border-color: $secondcolor;
-                // box-shadow: $box-shadow;
-              }
-            }
-            .label {
-              margin: 0;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 </style>

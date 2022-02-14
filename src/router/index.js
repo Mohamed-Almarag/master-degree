@@ -129,9 +129,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(`Navigating to: ${to.name}`);
-  console.log(`Navigating to meta : ${to.meta.authRequired}`);
-  console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
+  // console.log(`Navigating to: ${to.name}`);
+  // console.log(`Navigating to meta : ${to.meta.authRequired}`);
+  // console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
   if (to.meta.authRequired) {
     if (!auth.isAuthenticated()) {
       return router.push({ path: "login", query: { to: to.path } });
