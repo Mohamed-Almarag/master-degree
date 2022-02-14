@@ -87,7 +87,7 @@ export default {
     });
 
     onMounted(() => {
-      store.dispatch("Questionaire/getQuestionaires")
+      store.dispatch("Questionaire/getQuestionaires");
     });
 
     return {
