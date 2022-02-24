@@ -18,7 +18,12 @@
             "
           >
             <h6 class="title">{{ book.title }}</h6>
-            <a class="d-block download" :href="book.file" download>
+            <a
+              class="d-block download"
+              :href="book.file"
+              download
+              target="_blank"
+            >
               <span>تحميل</span>
               <fa class="icon" icon="download" />
             </a>

@@ -1,5 +1,5 @@
 <template>
-  <div class="single-elementk">
+  <!-- <div class="single-elementk">
     <div class="container-links">
       <a class="test" href="https://google.com">todos</a>
       <p>
@@ -36,61 +36,56 @@
           <p>{{ item.title }}</p>
           <p>{{ item.name }}</p>
         </div>
-        <!-- <button > -->
-        <!-- </button> -->
+       
       </div>
     </transition>
+  </div> -->
+  <div class="the-objectives">
+    <div v-for="item in moduleData" :key="item.id">
+      <p v-html="item.content"></p>
+    </div>
   </div>
 </template>
 
 <script>
 // import { ref } from "vue";
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, computed } from "vue";
+
+import { useStore } from "vuex";
+// import axios from "axios";
 
 export default {
   name: "TheContent",
   setup() {
+    const store = useStore();
     const contentData = ref([]);
     const hideContentDiv = ref(false);
     function closeModal() {
       hideContentDiv.value = false;
     }
-    onMounted(() => {
-      let allLinks = document.querySelectorAll(".container-links .test");
-      allLinks.forEach((item) => {
-        item.addEventListener("click", (e) => {
-          let someDetail = e.target.getAttribute("href");
-          if (someDetail.includes("jsonplaceholder")) {
-            e.preventDefault();
-            // console.log("right");
-            axios.get(`${someDetail}`).then((response) => {
-              // console.log(response.data.slice(0, 2));
-              contentData.value = response.data.slice(0, 2);
-              hideContentDiv.value = true;
-            });
-          }
-          // console.log("yes");
-        });
-      });
-      // console.log(allLinks);
+    const moduleData = computed(() => {
+      return store.state.Module.singleModule;
     });
-    return { contentData, hideContentDiv, closeModal };
-    // const divVisibilty = ref(true);
-    // const usersData = ref([]);
-
-    // function testingfunc() {
-    //   let testlink = document.querySelector(".test");
-    //   let linkattr = testlink.getAttribute("href");
-    //   divVisibilty.value = true;
-    //   axios.get(`${linkattr}`).then((res) => {
-    //     usersData.value = res.data.slice(0, 2);
+    // onMounted(() => {
+    //   let allLinks = document.querySelectorAll(".container-links .test");
+    //   allLinks.forEach((item) => {
+    //     item.addEventListener("click", (e) => {
+    //       let someDetail = e.target.getAttribute("href");
+    //       if (someDetail.includes("jsonplaceholder")) {
+    //         e.preventDefault();
+    //         // console.log("right");
+    //         axios.get(`${someDetail}`).then((response) => {
+    //           // console.log(response.data.slice(0, 2));
+    //           contentData.value = response.data.slice(0, 2);
+    //           hideContentDiv.value = true;
+    //         });
+    //       }
+    //       // console.log("yes");
+    //     });
     //   });
-    // }
-
-    // function downnow() {
-    //   divVisibilty.value = true;
-    // }
+    //   // console.log(allLinks);
+    // });
+    return { contentData, hideContentDiv, closeModal, moduleData };
   },
 };
 </script>

@@ -11,18 +11,18 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    meta: {
-      authRequired: true,
-    },
+    // meta: {
+    //   authRequired: true,
+    // },
   },
   {
     path: "/about",
     name: "About",
     component: () =>
       import(/* webpackChunkName: "About" */ "@/views/About.vue"),
-    meta: {
-      authRequired: true,
-    },
+    // meta: {
+    //   authRequired: true,
+    // },
   },
   {
     path: "/instructions",
@@ -84,7 +84,7 @@ const routes = [
     name: "LearningStyle",
     component: LearningStyle,
     meta: {
-      authRequired: true,
+      // authRequired: true,
     },
   },
   {
@@ -92,9 +92,9 @@ const routes = [
     name: "ContactUs",
     component: () =>
       import(/* webpackChunkName: "ContactUs" */ "@/views/ContactUs.vue"),
-    meta: {
-      authRequired: true,
-    },
+    // meta: {
+    //   authRequired: true,
+    // },
   },
   {
     path: "/profile",
@@ -106,20 +106,29 @@ const routes = [
     },
   },
   {
+    path: "/social",
+    name: "SocialMedia",
+    component: () =>
+      import(/* webpackChunkName: "ContactUs" */ "@/views/SocialMedia.vue"),
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
     path: "/sign-up",
     name: "SignUp",
     component: SignUp,
-    meta: {
-      authRequired: false,
-    },
+    // meta: {
+    //   authRequired: false,
+    // },
   },
   {
     path: "/login",
     name: "LogIn",
     component: LogIn,
-    meta: {
-      authRequired: false,
-    },
+    // meta: {
+    //   authRequired: false,
+    // },
   },
 ];
 
@@ -128,23 +137,14 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  // console.log(`Navigating to: ${to.name}`);
-  // console.log(`Navigating to meta : ${to.meta.authRequired}`);
-  // console.log(`Navigating to meta : ${!auth.isAuthenticated()}`);
+router.beforeEach((to) => {
   if (to.meta.authRequired) {
     if (!auth.isAuthenticated()) {
       return router.push({ path: "login", query: { to: to.path } });
-    } else if (auth.isAuthenticated() && auth.checkCategory()) {
+    } else if (auth.isAuthenticated() && !auth.checkCategory()) {
       return router.push({ path: "learning-style", query: { to: to.path } });
     }
   }
-  if (to.meta.login) {
-    if (auth.isAuthenticated()) {
-      return router.push({ path: "/groups" });
-    }
-  }
-  return next();
 });
 
 export default router;

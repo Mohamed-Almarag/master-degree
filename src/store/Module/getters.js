@@ -4,4 +4,5 @@ export default {
   exams: (state) => state.exams,
   examQuestions: (state) => state.examQuestions,
   submitExam: (state) => state.submitExam,
+  activites: (state) => state.activites,
 };

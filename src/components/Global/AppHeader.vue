@@ -56,6 +56,11 @@
               >
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'SocialMedia' }">
+                الحوار والمناقشه</router-link
+              >
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'ContactUs' }"
                 >تواصل معنا</router-link
               >
@@ -77,6 +82,12 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
+                <!-- <img
+                  v-if="image"
+                  class="img d-bloc rounded-circle"
+                  :src="image"
+                  alt="student"
+                /> -->
                 <img
                   class="img d-bloc rounded-circle"
                   src="../../assets/images/13.png"
@@ -105,6 +116,8 @@
 </template>
 
 <script>
+// import { useUserInfo } from "@/use/user-info";
+
 import { onMounted, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -112,6 +125,15 @@ export default {
   setup() {
     const store = useStore();
     const isLoggedIn = computed(() => store.state.Auth.token);
+    // const { image } = useUserInfo();
+    // const img = ref(null);
+    // function isimg() {
+    //   if (image !== null) {
+    //     console.log("uuuuuuuuuuuuu");
+    //     img.value = image;
+    //   }
+    // }
+
     function handleScroll() {
       let navbar = document.querySelector(".main-header .navbar");
       if (window.scrollY > 0) {
@@ -129,6 +151,10 @@ export default {
     onMounted(() => {
       window.addEventListener("scroll", handleScroll);
     });
+    onMounted(() => {
+      window.addEventListener("scroll", handleScroll);
+    });
+
     onUnmounted(() => {
       window.removeEventListener("scroll", handleScroll);
     });
@@ -172,7 +198,8 @@ export default {
         .nav-link {
           color: $textcolor;
           transition: $transition;
-          padding: 5px 10px;
+          // padding: 5px;
+          font-size: 13px;
           font-weight: bold;
           position: relative;
           &::before {

@@ -20,62 +20,32 @@
             @click="getQuestions(item.id)"
             class="d-block m-0 custom-btn more"
           >
-            بسم الله
+            ابدا الامتحان
           </button>
         </div>
       </div>
     </div>
 
-    <div
-      class="all-questions"
-      v-for="question in questions.questions"
-      :key="question.id"
-    >
-      <div class="every-questions shadow-sm">
-        <h5 class="title">
-          <fa icon="question" class="icons text-white rounded-circle" />{{
-            question.title
-          }}
-        </h5>
-        <div
-          class="question-options-container d-flex flex-wrap align-items-center"
-        >
-          <div
-            class="options-lists d-flex flex-wrap align-items-center"
-            v-for="(item, index) in question.options"
-            :key="index"
-          >
-            <div class="options-item d-flex align-items-center">
-              <input
-                @click.stop="pushExamResults(item.question_id, item.id)"
-                class="radio-input d-block"
-                type="radio"
-                :name="item.question_id"
-                :id="item.id"
-                :value="item.title"
-              />
-
-              <label class="label d-block" :for="item.id">{{
-                item.title
-              }}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="custom-btn" @click="submitExam">ارسال</button>
+    <QyestionsExams
+      :items="questions"
+      @close="showExam"
+      :show="show"
+    ></QyestionsExams>
   </div>
 </template>
 
 <script>
+import QyestionsExams from "../../components/SingleModuleElements/QyestionsExams.vue";
 import { useStore } from "vuex";
-import { reactive, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 export default {
   name: "TheQuestions",
+  components: { QyestionsExams },
   setup() {
     const store = useStore();
     const examQuestion = reactive([]);
     const formData = new FormData();
+    const show = ref(false);
     const moduleExams = computed(() => {
       return store.state.Module.exams;
     });
@@ -84,16 +54,23 @@ export default {
       return store.state.Module.examQuestions;
     });
     function getQuestions(id) {
-      store.dispatch("Module/getModuleExamQuetions", {
-        exam_id: id,
-      });
+      store
+        .dispatch("Module/getModuleExamQuetions", {
+          exam_id: id,
+        })
+        .then(() => {
+          show.value = !show.value;
+        });
     }
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;
       console.log(questionId);
       console.log(optionId);
     }
-
+    function showExam() {
+      show.value = !show.value;
+      examQuestion.value = [];
+    }
     function submitExam() {
       examQuestion.forEach((value, index) => {
         formData.append(`questions[${index}]`, value);
@@ -105,8 +82,10 @@ export default {
       moduleExams,
       questions,
       getQuestions,
-      examQuestion,
       pushExamResults,
+      showExam,
+      examQuestion,
+      show,
       submitExam,
     };
   },

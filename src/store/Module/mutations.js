@@ -14,4 +14,7 @@ export default {
   SUBMIT_EXAM(state, data) {
     return (state.submitExam = data);
   },
+  GET_ACTIVITIES(state, data) {
+    return (state.activites = data);
+  },
 };

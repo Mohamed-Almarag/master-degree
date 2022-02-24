@@ -10,11 +10,12 @@
               للتمكن من مهارات تصميم وإنتاج الفيديوهات الرقمية من البداية إلى
               النهاية.
             </p>
-            <button>
-              <router-link class="d-block" :to="{ name: 'About' }"
-                >للمزيد</router-link
-              >
-            </button>
+
+            <router-link
+              class="d-block custom-btn home-btn"
+              :to="{ name: 'About' }"
+              >للمزيد</router-link
+            >
           </div>
           <div class="description-photo col-md-6">
             <img
@@ -51,13 +52,17 @@ export default {
         font-size: 1.5rem;
         margin: 30px 0;
       }
+      .home-btn {
+        color: $white;
+        margin: 0;
+        text-decoration: none;
+        // a {
+        //   font-size: 1rem;
+        //   font-weight: bold;
+        // }
+      }
       button {
-        @extend %button;
-        a {
-          padding: 8px 40px;
-          font-size: 1rem;
-          font-weight: bold;
-        }
+        // @extend %button;
       }
     }
   }

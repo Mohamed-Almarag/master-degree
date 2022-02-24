@@ -1,7 +1,7 @@
 import EventEmitter from "events";
 
 // import store from "@/store/store.js"
-
+// import { categoryId } from "../use/user-info";
 // 'loggedIn' is used in other parts of application. So, Don't forget to change there also
 const localStorageKey = "loggedIn";
 
@@ -34,7 +34,7 @@ class AuthService extends EventEmitter {
   }
   checkCategory() {
     let student = JSON.parse(localStorage.getItem("student-data"));
-    return student.category_id != null;
+    return student.data.category_id != null;
   }
 }
 

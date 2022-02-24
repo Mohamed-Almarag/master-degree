@@ -2,6 +2,8 @@
   <div class="single-module view-padding">
     <div class="container">
       <div class="content-container">
+        <!-- <h3>{{ moduleData.name }}</h3>
+        <h3>{{ moduleData }}</h3> -->
         <div class="tabs-buttons">
           <button
             :class="[
@@ -14,6 +16,7 @@
               }
             "
           >
+            <fa class="icons" icon="bullseye" />
             الاهداف
           </button>
           <button
@@ -27,6 +30,7 @@
               }
             "
           >
+            <fa class="icons" icon="book-open" />
             المحتوى
           </button>
           <button
@@ -40,6 +44,7 @@
               }
             "
           >
+            <fa class="icons" icon="chalkboard-teacher" />
             الانشطه
           </button>
           <button
@@ -53,6 +58,7 @@
               }
             "
           >
+            <fa class="icons" icon="clipboard" />
             الملخص
           </button>
           <button
@@ -66,6 +72,7 @@
               }
             "
           >
+            <fa class="icons" icon="tasks" />
             التقويم
           </button>
         </div>
@@ -80,6 +87,8 @@
 </template>
 
 <script>
+import { useUserInfo } from "@/use/user-info";
+
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
@@ -99,11 +108,12 @@ export default {
   },
 
   setup() {
+    const { categoryId } = useUserInfo();
     const store = useStore();
-    const activeComponent = ref("TheQuestions");
+    const activeComponent = ref("TheActivities");
     const route = useRoute();
     const module_id = route.params.id;
-    const category_id = 2;
+    const category_id = categoryId;
     const moduleData = computed(() => {
       return store.state.Module.singleModule;
     });
@@ -148,6 +158,9 @@ export default {
         &:hover {
           background-color: $maincolor;
           color: $white;
+        }
+        .icons {
+          margin: 0 0 0 7px;
         }
       }
     }

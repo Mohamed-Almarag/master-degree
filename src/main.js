@@ -22,6 +22,15 @@ import {
   faTimes,
   faPen,
   faDownload,
+  faImage,
+  faComment,
+  faBullseye,
+  faBookOpen,
+  faChalkboardTeacher,
+  faClipboard,
+  faTasks,
+  faFilePdf,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faYoutube,
@@ -49,8 +58,18 @@ library.add(
   faCamera,
   faTimes,
   faPen,
-  faDownload
+  faDownload,
+  faImage,
+  faComment,
+  faBullseye,
+  faBookOpen,
+  faChalkboardTeacher,
+  faClipboard,
+  faTasks,
+  faFilePdf,
+  faPaperPlane
 );
+import { justSpecificWords } from "@/filters/filters";
 
 const app = createApp(App);
 
@@ -65,3 +84,4 @@ import "bootstrap-v4-rtl";
 import "bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css";
 
 app.use(store).use(router).mount("#app");
+app.config.globalProperties.justSpecificWords = justSpecificWords;

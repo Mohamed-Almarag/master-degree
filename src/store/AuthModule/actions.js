@@ -27,6 +27,8 @@ export default {
         }
       })
       .catch((error) => {
+        // console.log(error.response);
+        console.log(error);
         commit("SIGN_IN_ERRORS_MESSAGES", error.response);
         localStorage.removeItem("token");
         localStorage.removeItem("studentData");

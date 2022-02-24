@@ -34,58 +34,65 @@
         <span class="d-block or text-center">أو</span>
       </div>
       <div class="part-two">
-        <form action="" class="from-container">
+        <form
+          action=""
+          class="from-container"
+          @submit.prevent="submibtContactUs"
+        >
           <p class="text text-center">عبر رسائل البريد الالكترونى</p>
           <div class="from-group">
             <label for="" class="from-label d-block">الأسم</label>
-            <input
-              type="text"
-              class="from-input d-block"
-              v-model="contactUs.name"
-            />
+            <input type="text" class="from-input d-block" v-model="name" />
           </div>
           <div class="from-group">
             <label for="" class="from-label d-block">البريد الالكترونى</label>
-            <input
-              type="email"
-              class="from-input d-block"
-              v-model="contactUs.email"
-            />
+            <input type="email" class="from-input d-block" v-model="email" />
           </div>
           <div class="from-group">
             <label for="" class="from-label d-block">رقم الهاتف</label>
-            <input
-              type="tel"
-              class="from-input d-block"
-              v-model="contactUs.phone"
-            />
+            <input type="tel" class="from-input d-block" v-model="phone" />
           </div>
           <div class="from-group">
             <label for="" class="from-label d-block">الرساله</label>
             <textarea
               class="from-input text-area d-block"
-              v-model="contactUs.message"
+              v-model="message"
             ></textarea>
           </div>
           <button class="submit-button d-block">ارسل الان</button>
         </form>
       </div>
     </div>
+    <Loading :loading="loading"></Loading>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { ref, reactive, toRefs } from "vue";
 export default {
   name: "ContactUs",
   setup() {
-    const contactUs = ref({
+    const store = useStore();
+    const loading = ref(false);
+    const contactUs = reactive({
       name: "",
       email: "",
       phone: "",
       message: "",
     });
-    return { contactUs };
+    function submibtContactUs() {
+      loading.value = true;
+      let payload = new FormData();
+      payload.append("name", contactUs.name);
+      payload.append("email", contactUs.email);
+      payload.append("phone", contactUs.phone);
+      payload.append("message", contactUs.message);
+      store.dispatch("ContactUs/contactUs", payload).finally(() => {
+        loading.value = true;
+      });
+    }
+    return { ...toRefs(contactUs), loading, submibtContactUs };
   },
 };
 </script>
@@ -156,10 +163,15 @@ export default {
           padding: 9px;
           border: 1px solid $bordercolor;
           outline: none;
+          transition: $transition;
           // box-shadow: 0 1px 12px rgba($black, 0.3);
           &.text-area {
             height: 200px;
             resize: none;
+          }
+          &:focus-within {
+            border-color: $secondcolor;
+            box-shadow: 0 1px 12px rgba($secondcolor, 0.3);
           }
         }
       }
