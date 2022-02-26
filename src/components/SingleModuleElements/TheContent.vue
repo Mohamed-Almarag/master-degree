@@ -1,127 +1,235 @@
 <template>
-  <!-- <div class="single-elementk">
-    <div class="container-links">
-      <a class="test" href="https://google.com">todos</a>
-      <p>
-        Lorem ipsum dolor
-        <a class="test" href="https://jsonplaceholder.typicode.com/users"
-          >users</a
-        >
-        sit amet consectetur, adipisicing elit porro,
-      </p>
-      <div>
-        <p>
-          Lorem ipsum dolor
-          <a class="test" href="https://jsonplaceholder.typicode.com/todos"
-            >todos</a
-          >
-          sit amet consectetur, adipisicing elit porro,
-        </p>
-      </div>
-      <p>
-        Lorem ipsum dolor
-        <a class="test" href="https://jsonplaceholder.typicode.com/albums"
-          >albums</a
-        >
-        sit amet consectetur, adipisicing elit porro,
-      </p>
-    </div>
+  <div class="the-contents">
     <transition name="fade">
       <div
-        class="content-data d-flex justify-content-center align-items-center"
-        v-if="hideContentDiv"
+        class="content-modal form-modal-container clip-path"
+        v-if="hideModal"
       >
-        <div class="kkk" v-for="item in contentData" :key="item.id">
-          <fa class="close-modal-btn" @click="closeModal" icon="window-close" />
-          <p>{{ item.title }}</p>
-          <p>{{ item.name }}</p>
+        <div class="form-modal form-content-modal" v-if="contentPopupData">
+          <fa @click="closeModal" class="edit-icon cancel" icon="times" />
+          <h3 class="title text-center">{{ contentPopupData.title }}</h3>
+          <p class="active-text">{{ contentPopupData.description }}</p>
+          <div class="img-container" v-if="contentPopupData.image">
+            <img
+              class="w-100 m-100 img"
+              :src="contentPopupData.image"
+              alt="image"
+            />
+          </div>
         </div>
-       
       </div>
     </transition>
-  </div> -->
-  <div class="the-objectives">
-    <div v-for="item in moduleData" :key="item.id">
-      <p v-html="item.content"></p>
+    <div
+      class="every-content mb-5"
+      v-for="item in contents.contents"
+      :key="item.id"
+    >
+      <h5 class="content-section-title" v-if="item.title">{{ item.title }}</h5>
+      <div class="all-points" v-if="item.point">
+        <div class="ervery-point">
+          <h6 class="point-title">{{ item.point.title }}</h6>
+          <p
+            class="links-container active-text"
+            v-html="item.point.description"
+          ></p>
+        </div>
+        <div class="all-audios" v-if="item.point.files.length >= 1">
+          <div
+            class="every-audio"
+            v-for="audio in item.point.files"
+            :key="audio.id"
+          >
+            <h6 class="audio-title mb-3">{{ audio.title }}</h6>
+            <audio class="audio-sound" controls>
+              <source :src="audio.file" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+        <div class="all-links" v-for="link in item.point.links" :key="link.id">
+          <div class="every-link d-flex align-items-center">
+            <span class="d-block link-title">{{ link.title }}</span>
+            <a
+              class="d-block link-url resource"
+              :href="link.url"
+              target="_blank"
+            >
+              اضغط هنا
+              <fa class="link-icon" icon="external-link-alt" />
+            </a>
+            <div class="dropdown">
+              <button
+                class="btn resource dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-expanded="false"
+              >
+                شرح الرابط
+                <fa class="link-icon" icon="eye" />
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <p class="active-text">{{ link.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 // import { ref } from "vue";
-import { ref, computed } from "vue";
-
+import { ref, computed, onMounted } from "vue";
+import { useUserInfo } from "@/use/user-info";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 // import axios from "axios";
-
+import { getMethods } from "@/axios/helpers";
 export default {
   name: "TheContent",
   setup() {
     const store = useStore();
-    const contentData = ref([]);
-    const hideContentDiv = ref(false);
+    const contentPopupData = ref({});
+    const hideModal = ref(false);
     function closeModal() {
-      hideContentDiv.value = false;
+      hideModal.value = !hideModal.value;
     }
-    const moduleData = computed(() => {
+    const { categoryId } = useUserInfo();
+    const route = useRoute();
+    const module_id = route.params.id;
+    const category_id = categoryId;
+
+    const contents = computed(() => {
       return store.state.Module.singleModule;
     });
-    // onMounted(() => {
-    //   let allLinks = document.querySelectorAll(".container-links .test");
-    //   allLinks.forEach((item) => {
-    //     item.addEventListener("click", (e) => {
-    //       let someDetail = e.target.getAttribute("href");
-    //       if (someDetail.includes("jsonplaceholder")) {
-    //         e.preventDefault();
-    //         // console.log("right");
-    //         axios.get(`${someDetail}`).then((response) => {
-    //           // console.log(response.data.slice(0, 2));
-    //           contentData.value = response.data.slice(0, 2);
-    //           hideContentDiv.value = true;
-    //         });
-    //       }
-    //       // console.log("yes");
-    //     });
-    //   });
-    //   // console.log(allLinks);
-    // });
-    return { contentData, hideContentDiv, closeModal, moduleData };
+
+    onMounted(() => {
+      store
+        .dispatch("Module/getSingleModuleData", {
+          module_id: module_id,
+          category_id: category_id,
+        })
+        .then(() => {
+          let allLinks = document.querySelectorAll(".links-container");
+          console.log(allLinks);
+          let getItems = [];
+          for (let index = 0; index < allLinks.length; index++) {
+            const element = allLinks[index].getElementsByTagName("a");
+
+            getItems.push(...element);
+          }
+          getItems.forEach((element) => {
+            element.addEventListener("click", (e) => {
+              e.preventDefault();
+              let linkHref = e.target.getAttribute("href");
+              console.log(linkHref);
+              if (linkHref != null) {
+                hideModal.value = true;
+                getMethods(`${linkHref}`).then((res) => {
+                  contentPopupData.value = res.data.data;
+                  console.log(res.data.data);
+                });
+              }
+            });
+          });
+        });
+    });
+    return {
+      contentPopupData,
+      hideModal,
+      closeModal,
+      contents,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.content-data {
-  position: fixed;
-  z-index: 2000;
-  inset: 0;
-  background-color: rgba(#000, 0.7);
-  color: #fff;
-  &.fade-enter-from {
-    opacity: 0;
+.the-contents {
+  .content-modal {
+    .form-content-modal {
+      max-height: 85vh;
+    }
+    .img-container {
+      width: 60%;
+      // max-height: 300px;
+      margin: 20px auto 0;
+      padding: 10px;
+      border-radius: $radius;
+      background-color: $bgcard;
+      .img {
+        border-radius: $radius;
+        // max-height: 300px;
+      }
+    }
   }
-  &.fade-enter-to {
-    opacity: 1;
+  .every-content {
+    box-shadow: $simple-shadow;
+    border-radius: $radius;
+    padding: 20px;
+    .all-audios {
+      border-top: 1px solid $bordercolor;
+      border-bottom: 1px solid $bordercolor;
+      padding: 20px 0;
+      margin: 50px 0;
+      .every-audio {
+        margin: 30px 0;
+        .audio-sound {
+          width: 50%;
+        }
+      }
+    }
+    .all-points {
+      .ervery-point {
+        // border-bottom: 1px solid $bordercolor;
+        margin: 20px 0;
+        .point-title {
+          font-weight: bold;
+        }
+      }
+    }
+    .all-links {
+      padding: 20px 0;
+      .every-link {
+        gap: 30px;
+        .link-title {
+        }
+        .link-url {
+          text-decoration: none;
+        }
+        .dropdown {
+          .btn {
+            box-shadow: none;
+            &::after {
+              display: none;
+            }
+          }
+          .dropdown-menu {
+            min-width: 350px;
+            padding: 10px;
+            box-shadow: $simple-shadow;
+            top: 10px;
+          }
+        }
+        .resource {
+          background-color: $bgcard;
+          padding: 8px 16px;
+          border-radius: $radius;
+          font-size: 16px;
+          color: $textcolor;
+          transition: $transition;
+          &:hover {
+            background-color: $maincolor;
+            color: $white;
+          }
+        }
+        .link-icon {
+          margin-right: 7px;
+        }
+      }
+    }
   }
-  &.fade-enter-active {
-    transition: opacity 0.5s ease;
-  }
-  &.fade-leave-from {
-    opacity: 1;
-  }
-  &.fade-leave-to {
-    opacity: 0;
-  }
-  &.fade-leave-active {
-    transition: opacity 0.5s ease;
-  }
-  .close-modal-btn {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-  }
-}
-.kkk {
-  position: relative;
 }
 </style>

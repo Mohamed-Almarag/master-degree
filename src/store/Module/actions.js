@@ -17,8 +17,8 @@ export default {
     return await new Promise((resolve, reject) => {
       postMethods("student/modules", payload)
         .then((response) => {
-          commit("SET_SINGLE_MODULE", response.data.data.data);
-          // console.log(response.data.data.data);
+          commit("SET_SINGLE_MODULE", response.data.data);
+          // console.log(response.data.data);
           resolve(response);
         })
         .catch((error) => {
@@ -59,7 +59,6 @@ export default {
   async getActivities({ commit }, payload) {
     await postMethods("student/modules/activities", payload).then(
       (response) => {
-        console.log(response.data);
         commit("GET_ACTIVITIES", response.data.data);
       }
     );

@@ -79,9 +79,9 @@ export default {
       transition: 0.5s ease-in-out;
       font-weight: bold;
       font-style: italic;
+      border-radius: 10px;
       &:hover {
         color: $white;
-        border-radius: 10px;
         &::before,
         &::after {
           width: 50%;

@@ -2,20 +2,28 @@
   <transition name="fade">
     <div class="form-modal-container clip-path" v-if="show">
       <form
+        @submit.prevent="submitPost"
         action=""
         class="form-modal"
         :class="{ 'add-post': imgPreviewUrl != null }"
       >
         <fa @click="close" class="edit-icon cancel" icon="times" />
         <div class="form-group">
-          <textarea class="form-input text-area"></textarea>
+          <textarea
+            class="form-input text-area"
+            v-model="postData.body"
+          ></textarea>
         </div>
         <div class="post-photo">
           <transition name="fade">
-            <div class="preview-container-image swip" v-if="imgPreviewUrl">
+            <div class="preview-img-post clip-path" v-if="imgPreviewUrl">
+              <fa
+                @click="cancelChangePhoto"
+                class="preview-icon-times"
+                icon="times"
+              />
               <img
-                draggable="false"
-                class="preview-image d-block m-auto"
+                class="d-block preview-img w-100 h-100"
                 :src="imgPreviewUrl"
                 alt="preview"
               />
@@ -29,9 +37,8 @@
               <label class="upload-photo rounded-circle" for="photo"
                 ><fa class="icon" icon="image"
               /></label>
-              <!-- @change="handelUploadFileImage($event)" -->
               <input
-                @change="fortest($event)"
+                @change="useHandelUploadFileImage($event)"
                 class="file-input"
                 type="file"
                 id="photo"
@@ -39,7 +46,6 @@
             </div>
           </div>
         </div>
-
         <button class="custom-btn d-block">نشر</button>
       </form>
     </div>
@@ -47,7 +53,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import useChangePhoto from "@/use/choose-image";
+import { reactive, computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "AddPost",
   props: {
@@ -60,25 +68,63 @@ export default {
     const close = () => {
       emit("close");
     };
+    const store = useStore();
+    const forChangePhoto = useChangePhoto();
+    const knowimg = computed(() => {
+      return forChangePhoto.img.value;
+    });
+    const postData = reactive({
+      body: null,
+      image: knowimg,
+    });
     const fortest = (event) => {
       emit("fortest", event.target.value);
       console.log(event.target.value);
     };
-    const image = ref(null);
-    const imgPreviewUrl = ref(null);
-    function handelUploadFileImage(event) {
-      let reader = new FileReader();
-      reader.onload = function () {
-        imgPreviewUrl.value = reader.result;
-      };
-      image.value = event.target.files[0];
-      if (image.value) {
-        reader.readAsDataURL(image.value);
-      }
+    function submitPost() {
+      let payload = new FormData();
+      payload.append("body", postData.body);
+      payload.append("image", postData.image);
+      store
+        .dispatch("Social/addPost", payload)
+        .then((response) => {
+          if (response.status == 200) {
+            window.location.reload();
+            forChangePhoto.imgPreviewUrl.value = null;
+            forChangePhoto.img.value = null;
+            postData.body = null;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    return { fortest, close, image, imgPreviewUrl, handelUploadFileImage };
+    return {
+      fortest,
+      close,
+      ...forChangePhoto,
+      postData,
+      knowimg,
+      submitPost,
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.post-photo {
+  .preview-img-post {
+    position: relative;
+    max-width: 450px;
+    margin: 0 auto 20px;
+    background-color: $bgcard;
+    padding: 10px;
+    border-radius: $radius;
+    max-height: 350px;
+    .preview-img {
+      max-width: 450px;
+      max-height: 350px;
+    }
+  }
+}
+</style>

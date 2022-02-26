@@ -16,9 +16,9 @@
       <div class="part-two col-md-6">
         <div class="img-container">
           <img
-            class="photo"
+            class="photo w-100 h-100"
             draggable="false"
-            src="@/assets/images/02.png"
+            src="../../../assets/images/002.jpeg"
             alt="objectivies"
           />
         </div>
@@ -51,6 +51,7 @@ export default {
         opacity: 0.8;
         transition: 0.5s ease-in-out;
         transform-origin: top left;
+        border-radius: 10px;
         &:hover {
           opacity: 1;
           transform: scale(0.9) skew(7deg);

@@ -2,9 +2,14 @@
   <div class="single-module view-padding">
     <div class="container">
       <div class="content-container">
-        <!-- <h3>{{ moduleData.name }}</h3>
-        <h3>{{ moduleData }}</h3> -->
-        <div class="tabs-buttons">
+        <div class="single-names mb-5">
+          <h3 class="single-names-title content-section-title">
+            {{ moduleData.name }}
+          </h3>
+          <p class="active-text">{{ moduleData.description }}</p>
+        </div>
+        <!-- <h3>{{ moduleData }}</h3> -->
+        <div class="tabs-buttons mb-4">
           <button
             :class="[
               'switch-button',
@@ -77,9 +82,7 @@
           </button>
         </div>
         <div class="active-component">
-          <keep-alive>
-            <component :is="activeComponent"></component>
-          </keep-alive>
+          <component :is="activeComponent"></component>
         </div>
       </div>
     </div>
@@ -110,7 +113,7 @@ export default {
   setup() {
     const { categoryId } = useUserInfo();
     const store = useStore();
-    const activeComponent = ref("TheActivities");
+    const activeComponent = ref("TheSummary");
     const route = useRoute();
     const module_id = route.params.id;
     const category_id = categoryId;
@@ -125,9 +128,6 @@ export default {
       store.dispatch("Module/getExams", {
         module_id: module_id,
       });
-      // store.dispatch("Module/getModuleExamQuetions", {
-      //   module_id: module_id,
-      // });
     });
     return { moduleData, activeComponent };
   },

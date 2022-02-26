@@ -1,6 +1,10 @@
 <template>
   <div class="activities">
-    <div class="all-activites" v-for="active in activites" :key="active.id">
+    <div
+      class="all-activites mb-5"
+      v-for="active in activites"
+      :key="active.id"
+    >
       <div class="words">
         <p class="active-text">
           {{ active.comment }}
@@ -138,7 +142,7 @@
                       >
                         <fa
                           @click="cancelChangePhoto"
-                          class="icon-times"
+                          class="preview-icon-times"
                           icon="times"
                         />
                         <img
@@ -164,7 +168,7 @@
                       </div>
                     </transition>
                     <button
-                      :disabled="isNotEmpty == 1"
+                      :disabled="isNotEmpty"
                       class="send-button"
                       @click="submitComment(active.id)"
                     >
@@ -328,12 +332,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .activities {
-  padding: 30px 0 70px;
   // background-color: $bgcard;
   .all-activites {
     // margin-bottom: 50px;
     max-width: 900px;
-    margin: 30px auto;
+    margin: auto;
     box-shadow: $box-shadow;
     color: $textcolor;
     padding: 20px;
@@ -445,25 +448,7 @@ export default {
               padding: 10px;
               background-color: $bgcard;
               border-radius: 10px;
-              .icon-times {
-                position: absolute;
-                top: -12px;
-                right: -12px;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                padding: 5px;
-                background-color: $white;
-                border: 1px solid $bordercolor;
-                transition: $transition;
-                cursor: pointer;
-                box-shadow: $simple-shadow;
-                &:hover {
-                  background-color: $cancel;
-                  border-color: $cancel;
-                  color: $white;
-                }
-              }
+
               .preview-img {
                 max-width: 160px;
                 max-height: 160px;

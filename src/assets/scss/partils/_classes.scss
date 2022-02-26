@@ -240,3 +240,51 @@
     color: $textcolor;
   }
 }
+
+.preview-icon-times {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: $white;
+  border: 1px solid $bordercolor;
+  transition: $transition;
+  cursor: pointer;
+  box-shadow: $simple-shadow;
+  &:hover {
+    background-color: $cancel;
+    border-color: $cancel;
+    color: $white;
+  }
+}
+
+.content-section-title {
+  color: $headcolor;
+  text-shadow: $text-shadow;
+  font-weight: bold;
+  margin-bottom: 40px;
+  position: relative;
+  width: fit-content;
+  &.single-names-title {
+    color: $maincolor;
+  }
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    right: 0;
+    height: 2px;
+    background-color: $maincolor;
+  }
+  &::before {
+    width: 40%;
+    top: 130%;
+  }
+  &::after {
+    width: 75%;
+    top: 160%;
+  }
+}
