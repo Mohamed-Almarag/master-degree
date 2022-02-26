@@ -64,7 +64,6 @@ export default {
     const optionValue = ref([]);
     const questions = reactive([]);
     const formData = new FormData();
-    const optionsHere = reactive([]);
 
     function dataPush(questionId, optionId) {
       questions[questionId] = optionId;
@@ -88,7 +87,6 @@ export default {
     return {
       questionaires,
       optionValue,
-      optionsHere,
       questions,
       dataPush,
       submit,
