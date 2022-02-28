@@ -1,6 +1,6 @@
 <template>
   <div class="objectivies view-padding">
-    <DescriptionPages>
+    <DescriptionPages bgImage="Objectives">
       <template #title>
         <h2 class="title-page h1">الأهــــداف</h2>
       </template>

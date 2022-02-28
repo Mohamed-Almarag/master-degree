@@ -63,4 +63,10 @@ export default {
       }
     );
   },
+  async getCategories({ commit }, payload) {
+    await getMethods("student/categories", payload).then((response) => {
+      commit("GET_CATEGORIES", response.data.data);
+      // console.log(response.data.data);
+    });
+  },
 };

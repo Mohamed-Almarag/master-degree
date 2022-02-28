@@ -5,4 +5,5 @@ export default () => ({
   examQuestions: [],
   submitExam: [],
   activites: [],
+  allCategories: [],
 });

@@ -1,6 +1,6 @@
 <template>
   <div class="details-content view-padding">
-    <DescriptionPages bgImage="library">
+    <DescriptionPages bgImage="Content">
       <template #title>
         <h2 class="main-pages-title">الموديولات التعليميه</h2>
       </template>

@@ -15,7 +15,11 @@ export default {
       required: false,
       default: "defaultImage",
       validator: function (value) {
-        return ["defaultImage", "library", "Contact"].indexOf(value) !== -1;
+        return (
+          ["defaultImage", "library", "Contact", "Objectives"].indexOf(
+            value
+          ) !== -1
+        );
       },
     },
   },
@@ -43,10 +47,16 @@ export default {
     @extend %before;
   }
   &-library {
-    background-image: url("../../assets/images/pages/02.jpg");
+    background-image: url("../../assets/images/pages/0003.jpeg");
   }
   &-Contact {
-    background-image: url("../../assets/images/pages/001.jpg");
+    background-image: url("../../assets/images/pages/0004.jpeg");
+  }
+  &-Objectives {
+    background-image: url("../../assets/images/pages/0001.jpeg");
+  }
+  &-Content {
+    background-image: url("../../assets/images/pages/0002.jpeg");
   }
 }
 @keyframes zoom-in-out {

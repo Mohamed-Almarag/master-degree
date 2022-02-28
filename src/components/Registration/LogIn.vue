@@ -34,9 +34,9 @@
       </form>
       <!-- End Form  -->
       <div class="ask-account text-center">
-        <span class="message d-inline-block">هل لديك حساب بالفعل؟</span>
-        <router-link class="router-link-page" :to="{ name: 'LogIn' }"
-          >تسجيل الدخول</router-link
+        <span class="message d-inline-block">ليس لديك حساب بالفعل؟</span>
+        <router-link class="router-link-page" :to="{ name: 'SignUp' }"
+          >اشتراك</router-link
         >
       </div>
     </div>
@@ -47,6 +47,8 @@
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+// import { useRouter, useRoute } from "vue-router";
+
 export default {
   name: "LogIn",
   setup() {
@@ -56,6 +58,7 @@ export default {
     });
     const store = useStore();
     const router = useRouter();
+    // const route = useRoute();
     function showAndHidePassword() {
       let passwordInput = document.querySelector(".password-input");
       if (passwordInput.getAttribute("type") == "password") {
@@ -68,9 +71,16 @@ export default {
       let payload = new FormData();
       payload.append("email", userData.email);
       payload.append("password", userData.password);
-      store.dispatch("Auth/signIn", payload).then(() => {
-        router.push({ name: "Home" });
-      });
+      store
+        .dispatch("Auth/signIn", payload)
+        .then(() => {
+          router.push({ name: "Home" });
+        })
+        .finally(() => {
+          // if (route.name == "Home") {
+          //   }
+          window.location.reload();
+        });
     }
     return {
       ...toRefs(userData),

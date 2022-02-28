@@ -8,6 +8,7 @@
         <div class="form-modal form-content-modal" v-if="contentPopupData">
           <fa @click="closeModal" class="edit-icon cancel" icon="times" />
           <h3 class="title text-center">{{ contentPopupData.title }}</h3>
+
           <p class="active-text">{{ contentPopupData.description }}</p>
           <div class="img-container" v-if="contentPopupData.image">
             <img
@@ -19,12 +20,49 @@
         </div>
       </div>
     </transition>
+    <transition name="fade">
+      <div
+        class="change-data-modal form-modal-container clip-path"
+        v-if="anotherContent"
+      >
+        <div class="form-modal same-content-data" v-if="anotherContentData">
+          <fa
+            @click="openAnotherContentModal"
+            class="edit-icon cancel"
+            icon="times"
+          />
+          <!-- <h5 v-if="anotherContentData == {}">جارى تحميل البيانات</h5> -->
+          <h5 class="title text-center">{{ anotherContentData.title }}</h5>
+          <p
+            class="active-text another-content-in-content"
+            v-html="anotherContentData.description"
+          ></p>
+        </div>
+      </div>
+    </transition>
     <div
       class="every-content mb-5"
       v-for="item in contents.contents"
       :key="item.id"
     >
-      <h5 class="content-section-title" v-if="item.title">{{ item.title }}</h5>
+      <div
+        class="all-categories d-flex justify-content-between align-items-center"
+      >
+        <h5 class="content-section-title" v-if="item.title">
+          {{ item.title }}
+        </h5>
+        <div class="switches-category d-flex" v-if="env == 1">
+          <button
+            class="btn-for-switch d-block"
+            :class="{ 'hide-same-category': cat.id == categoryId }"
+            @click="getSameContent(item.id, cat.id)"
+            v-for="cat in categories"
+            :key="cat.id"
+          >
+            <span>{{ cat.name }}</span>
+          </button>
+        </div>
+      </div>
       <div class="all-points" v-if="item.point">
         <div class="ervery-point">
           <h6 class="point-title">{{ item.point.title }}</h6>
@@ -86,17 +124,18 @@ import { useUserInfo } from "@/use/user-info";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 // import axios from "axios";
-import { getMethods } from "@/axios/helpers";
+import { getMethods, postMethods } from "@/axios/helpers";
 export default {
   name: "TheContent",
   setup() {
     const store = useStore();
     const contentPopupData = ref({});
     const hideModal = ref(false);
+    const anotherContent = ref(false);
     function closeModal() {
       hideModal.value = !hideModal.value;
     }
-    const { categoryId } = useUserInfo();
+    const { categoryId, env } = useUserInfo();
     const route = useRoute();
     const module_id = route.params.id;
     const category_id = categoryId;
@@ -104,8 +143,31 @@ export default {
     const contents = computed(() => {
       return store.state.Module.singleModule;
     });
+    const categories = computed(() => {
+      return store.state.Module.allCategories;
+    });
+    const anotherContentData = ref({});
 
+    function getSameContent(contentId, categoryId) {
+      anotherContent.value = true;
+      postMethods("student/modules/content/point/show", {
+        content_id: contentId,
+        category_id: categoryId,
+      }).then((response) => {
+        anotherContentData.value = response.data.data;
+        // let test = response.data.data;
+        // // console.log(test);
+        // let showsgow = test.description.includes("a");
+        // console.log(showsgow);
+      });
+    }
+    function openAnotherContentModal() {
+      anotherContent.value = !anotherContent.value;
+      anotherContentData.value = {};
+    }
     onMounted(() => {
+      store.dispatch("Module/getCategories");
+      console.log(env);
       store
         .dispatch("Module/getSingleModuleData", {
           module_id: module_id,
@@ -113,7 +175,6 @@ export default {
         })
         .then(() => {
           let allLinks = document.querySelectorAll(".links-container");
-          console.log(allLinks);
           let getItems = [];
           for (let index = 0; index < allLinks.length; index++) {
             const element = allLinks[index].getElementsByTagName("a");
@@ -124,7 +185,7 @@ export default {
             element.addEventListener("click", (e) => {
               e.preventDefault();
               let linkHref = e.target.getAttribute("href");
-              console.log(linkHref);
+              // console.log(linkHref);
               if (linkHref != null) {
                 hideModal.value = true;
                 getMethods(`${linkHref}`).then((res) => {
@@ -141,6 +202,14 @@ export default {
       hideModal,
       closeModal,
       contents,
+      categories,
+      categoryId,
+      getSameContent,
+      anotherContent,
+      openAnotherContentModal,
+      // getSameContentData,
+      anotherContentData,
+      env,
     };
   },
 };
@@ -165,10 +234,36 @@ export default {
       }
     }
   }
+  .change-data-modal {
+    .same-content-data {
+      max-height: 85vh;
+    }
+  }
   .every-content {
     box-shadow: $simple-shadow;
     border-radius: $radius;
     padding: 20px;
+    .all-categories {
+      .switches-category {
+        gap: 10px;
+        .btn-for-switch {
+          border: none;
+          background-color: $bgcard;
+          padding: 7px 20px;
+          border-radius: 5px;
+          font-size: 14px;
+          color: $textcolor;
+          transition: $transition;
+          &.hide-same-category {
+            display: none !important;
+          }
+          &:hover {
+            background-color: $maincolor;
+            color: $white;
+          }
+        }
+      }
+    }
     .all-audios {
       border-top: 1px solid $bordercolor;
       border-bottom: 1px solid $bordercolor;

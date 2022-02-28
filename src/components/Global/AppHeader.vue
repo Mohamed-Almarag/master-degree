@@ -9,7 +9,7 @@
             alt="logo"
             draggable="false"
           />
-          <span class="site-name">بيئة التدريب التكيفيه</span>
+          <span class="site-name">بيئة التدريب التكيفية</span>
         </router-link>
         <button
           class="navbar-toggler"
@@ -120,11 +120,13 @@
 
 import { onMounted, onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   name: "AppHeader",
   setup() {
     const store = useStore();
     const isLoggedIn = computed(() => store.state.Auth.token);
+    const router = useRouter();
     // const { image } = useUserInfo();
     // const img = ref(null);
     // function isimg() {
@@ -144,9 +146,14 @@ export default {
     }
 
     function logout() {
-      store.dispatch("Auth/logOut").then(() => {
-        window.location.reload();
-      });
+      store
+        .dispatch("Auth/logOut")
+        .then(() => {
+          router.push({ name: "Home" });
+        })
+        .finally(() => {
+          window.location.reload();
+        });
     }
     onMounted(() => {
       window.addEventListener("scroll", handleScroll);

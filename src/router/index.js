@@ -1,17 +1,13 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 // import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import LearningStyle from "@/components/DetailsContentPage/LearningStyle.vue";
-import SingleModule from "@/components/SingleModule/SingleModule.vue";
-import SignUp from "@/components/Registration/SignUp.vue";
-import LogIn from "@/components/Registration/LogIn.vue";
+
 import auth from "@/auth/authService";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import(/* webpackChunkName: "Home" */ "@/views/Home.vue"),
     // meta: {
     //   authRequired: true,
     // },
@@ -77,13 +73,19 @@ const routes = [
   {
     path: "/details-content/:id",
     name: "SingleModule",
-    component: SingleModule,
+    component: () =>
+      import(
+        /* webpackChunkName: "SingleModule" */ "@/components/SingleModule/SingleModule.vue"
+      ),
   },
 
   {
     path: "/learning-style",
     name: "LearningStyle",
-    component: LearningStyle,
+    component: () =>
+      import(
+        /* webpackChunkName: "LearningStyle" */ "@/components/DetailsContentPage/LearningStyle.vue"
+      ),
     meta: {
       // authRequired: true,
     },
@@ -118,7 +120,32 @@ const routes = [
   {
     path: "/sign-up",
     name: "SignUp",
-    component: SignUp,
+    component: () =>
+      import(
+        /* webpackChunkName: "SignUp" */ "@/components/Registration/SignUp.vue"
+      ),
+    // meta: {
+    //   authRequired: false,
+    // },
+  },
+  {
+    path: "/environment-one",
+    name: "EnvironmentOne",
+    component: () =>
+      import(
+        /* webpackChunkName: "SignUp" */ "@/components/Registration/EnvironmentOne.vue"
+      ),
+    // meta: {
+    //   authRequired: false,
+    // },
+  },
+  {
+    path: "/environment-two",
+    name: "EnvironmentTwo",
+    component: () =>
+      import(
+        /* webpackChunkName: "SignUp" */ "@/components/Registration/EnvironmentTwo.vue"
+      ),
     // meta: {
     //   authRequired: false,
     // },
@@ -126,7 +153,10 @@ const routes = [
   {
     path: "/login",
     name: "LogIn",
-    component: LogIn,
+    component: () =>
+      import(
+        /* webpackChunkName: "LogIn" */ "@/components/Registration/LogIn.vue"
+      ),
     // meta: {
     //   authRequired: false,
     // },
@@ -142,9 +172,9 @@ const router = createRouter({
 router.beforeEach((to) => {
   if (to.meta.authRequired) {
     if (!auth.isAuthenticated()) {
-      return router.push({ path: "login", query: { to: to.path } });
+      return router.push({ path: "login" });
     } else if (auth.isAuthenticated() && !auth.checkCategory()) {
-      return router.push({ path: "learning-style", query: { to: to.path } });
+      return router.push({ path: "learning-style" });
     }
   }
 });

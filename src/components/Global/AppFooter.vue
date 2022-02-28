@@ -57,19 +57,17 @@
       </div>
     </div>
     <div class="all-right-reserved">
-      <div class="container">
-        <div
-          class="footer-right d-flex justify-content-between align-items-center"
-        >
-          <div class="part-one">
-            <span class="every">جميع الحقوق محفوظه &copy; 2022</span>
-          </div>
-          <div class="part-two">
+      <div
+        class="footer-right d-flex justify-content-center align-items-center"
+      >
+        <div class="part-one">
+          <span class="every">جميع الحقوق محفوظه &copy; 2022</span>
+        </div>
+        <!-- <div class="part-two">
             صنع بــ
             <span class="name"><fa class="icon" icon="heart" /></span>
             <a href="tel: 01064911906">م/ محمد المعراج</a>
-          </div>
-        </div>
+          </div> -->
       </div>
     </div>
   </footer>

@@ -5,4 +5,5 @@ export default {
   examQuestions: (state) => state.examQuestions,
   submitExam: (state) => state.submitExam,
   activites: (state) => state.activites,
+  allCategories: (state) => state.allCategories,
 };

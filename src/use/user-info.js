@@ -6,6 +6,7 @@ export const useUserInfo = () => {
     let name = student.data.name;
     let image = student.data.image;
     let categoryId = student.data.category_id;
-    return { name, image, categoryId, id };
+    let env = student.data.env;
+    return { name, image, categoryId, id, env };
   }
 };

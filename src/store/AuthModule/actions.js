@@ -15,24 +15,46 @@ export default {
   },
 
   async signIn({ commit }, payload) {
-    return await postMethods("student/login", payload)
-      .then((response) => {
-        let studentData = response.data;
-        if (response.status === 200) {
-          commit("SET_USER_AUTHENTICATION", response);
-          commit("SET_TOKEN", response.data.token);
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("loggedIn", "true");
-          localStorage.setItem("student-data", JSON.stringify(studentData));
-        }
-      })
-      .catch((error) => {
-        // console.log(error.response);
-        console.log(error);
-        commit("SIGN_IN_ERRORS_MESSAGES", error.response);
-        localStorage.removeItem("token");
-        localStorage.removeItem("studentData");
-      });
+    return await new Promise((resolve, reject) => {
+      postMethods("student/login", payload)
+        .then((response) => {
+          let studentData = response.data;
+          if (response.status === 200) {
+            commit("SET_USER_AUTHENTICATION", response);
+            commit("SET_TOKEN", response.data.token);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("student-data", JSON.stringify(studentData));
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          // console.log(error.response);
+          console.log(error);
+          commit("SIGN_IN_ERRORS_MESSAGES", error.response);
+          localStorage.removeItem("token");
+          localStorage.removeItem("studentData");
+          reject(error);
+        });
+    });
+    // return await postMethods("student/login", payload)
+    //   .then((response) => {
+    //     let studentData = response.data;
+    //     if (response.status === 200) {
+    //       commit("SET_USER_AUTHENTICATION", response);
+    //       commit("SET_TOKEN", response.data.token);
+    //       localStorage.setItem("token", response.data.token);
+    //       localStorage.setItem("loggedIn", "true");
+    //       localStorage.setItem("student-data", JSON.stringify(studentData));
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // console.log(error.response);
+    //     console.log(error);
+    //     commit("SIGN_IN_ERRORS_MESSAGES", error.response);
+    //     localStorage.removeItem("token");
+    //     localStorage.removeItem("studentData");
+    //   });
   },
   logOut({ commit }) {
     localStorage.removeItem("token");

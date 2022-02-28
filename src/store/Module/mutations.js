@@ -17,4 +17,7 @@ export default {
   GET_ACTIVITIES(state, data) {
     return (state.activites = data);
   },
+  GET_CATEGORIES(state, data) {
+    return (state.allCategories = data);
+  },
 };

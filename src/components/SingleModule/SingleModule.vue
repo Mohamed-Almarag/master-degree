@@ -113,7 +113,7 @@ export default {
   setup() {
     const { categoryId } = useUserInfo();
     const store = useStore();
-    const activeComponent = ref("TheSummary");
+    const activeComponent = ref("TheContent");
     const route = useRoute();
     const module_id = route.params.id;
     const category_id = categoryId;

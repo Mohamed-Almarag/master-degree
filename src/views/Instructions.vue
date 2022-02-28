@@ -3,7 +3,11 @@
     <div class="container">
       <div class="vedios">
         <h2 class="main-form-title">شرح بيئة التدريب التكيفيه</h2>
-        <img class="img" src="../assets/images/camera.jpg" alt="" />
+        <img
+          class="img"
+          src="../assets/images/pages/0006.jpeg"
+          alt="instructions"
+        />
       </div>
     </div>
   </div>

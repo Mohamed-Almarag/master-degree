@@ -5,6 +5,16 @@
   color: $textcolor;
   line-height: 2;
   margin-bottom: 0;
+  &.another-content-in-content {
+    img {
+      max-width: 100%;
+    }
+    a {
+      color: $textcolor !important;
+      text-decoration: none;
+      pointer-events: none;
+    }
+  }
 }
 // these classes speacily for registration
 .ask-account {

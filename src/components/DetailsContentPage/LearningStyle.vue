@@ -1,5 +1,6 @@
 <template>
   <div class="view-padding learning-style">
+    <loading :loading="loading"></loading>
     <div class="container">
       <h2 class="main-section-title">تحديد أسلوب التعلم</h2>
       <div
@@ -54,15 +55,18 @@
 </template>
 
 <script>
+// hello@hello.com
 import { ref, reactive, computed, onMounted } from "vue";
 import { useStore } from "vuex";
-
+import { useRouter } from "vue-router";
 export default {
   name: "LearningStyle",
   setup() {
     const store = useStore();
     const optionValue = ref([]);
+    const loading = ref(false);
     const questions = reactive([]);
+    const router = useRouter();
     const formData = new FormData();
 
     function dataPush(questionId, optionId) {
@@ -70,10 +74,20 @@ export default {
     }
 
     function submit() {
+      loading.value = true;
       questions.forEach((value, index) => {
         formData.append(`questions[${index}]`, value);
       });
-      store.dispatch("Questionaire/submitQuestionaires", formData);
+      store
+        .dispatch("Questionaire/submitQuestionaires", formData)
+        .then(() => {
+          window.location.reload();
+          console.log("yes");
+        })
+        .finally(() => {
+          router.replace("/");
+          loading.value = false;
+        });
     }
 
     const questionaires = computed(() => {
@@ -90,6 +104,7 @@ export default {
       questions,
       dataPush,
       submit,
+      loading,
     };
   },
   components: {},
