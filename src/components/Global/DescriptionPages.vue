@@ -16,9 +16,13 @@ export default {
       default: "defaultImage",
       validator: function (value) {
         return (
-          ["defaultImage", "library", "Contact", "Objectives"].indexOf(
-            value
-          ) !== -1
+          [
+            "defaultImage",
+            "library",
+            "Contact",
+            "Objectives",
+            "Content",
+          ].indexOf(value) !== -1
         );
       },
     },

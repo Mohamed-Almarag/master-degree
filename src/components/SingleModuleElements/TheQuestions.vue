@@ -15,7 +15,7 @@
             flex-wrap
           "
         >
-          <h6 class="title">{{ item.name }}</h6>
+          <h6 class="title mb-4">{{ item.name }}</h6>
           <button
             @click="getQuestions(item.id)"
             class="d-block m-0 custom-btn more"
@@ -54,13 +54,13 @@ export default {
       return store.state.Module.examQuestions;
     });
     function getQuestions(id) {
-      store
-        .dispatch("Module/getModuleExamQuetions", {
-          exam_id: id,
-        })
-        .then(() => {
-          show.value = !show.value;
-        });
+      show.value = !show.value;
+      store.dispatch("Module/getModuleExamQuetions", {
+        exam_id: id,
+      });
+      // .then(() => {
+      //   show.value = !show.value;
+      // });
     }
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;

@@ -3,16 +3,21 @@
     <loading :loading="loading"></loading>
     <div class="container">
       <h2 class="main-section-title">تحديد أسلوب التعلم</h2>
+      <p class="active-text">
+        عزيزي الطالب..عزيزتي الطالبة: أمامك استبيان يحدد أسلوب التعلم المفضل
+        لديك. لذا نرجو منك؛ الإجابة عن جميع عبارات الاستبيان بعد قراءة كل عبارة
+        بدقة، مع العلم؛ لا توجد إجابة صحيحة وأخرى خاطئة..ولكن الإجابة تُعبر عن
+        تفضيلاتك الشخصية. شاكر لكم حسن تعاونكم..بالتوفيق.
+      </p>
       <div
         class="all-questions"
-        v-for="question in questionaires"
+        v-for="(question, index) in questionaires"
         :key="question.id"
       >
         <div class="every-questions shadow-sm">
           <h5 class="title">
-            <fa icon="question" class="icons text-white rounded-circle" />{{
-              question.title
-            }}
+            <span class="span-numbers">{{ index + 1 }}</span>
+            {{ question.title }}
           </h5>
           <div
             class="
@@ -65,6 +70,7 @@ export default {
     const store = useStore();
     const optionValue = ref([]);
     const loading = ref(false);
+    const start = ref(1);
     const questions = reactive([]);
     const router = useRouter();
     const formData = new FormData();
@@ -105,6 +111,7 @@ export default {
       dataPush,
       submit,
       loading,
+      start,
     };
   },
   components: {},

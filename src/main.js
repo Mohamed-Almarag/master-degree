@@ -32,6 +32,7 @@ import {
   faFilePdf,
   faPaperPlane,
   faExternalLinkAlt,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faYoutube,
@@ -69,7 +70,8 @@ library.add(
   faTasks,
   faFilePdf,
   faPaperPlane,
-  faExternalLinkAlt
+  faExternalLinkAlt,
+  faCog
 );
 import { justSpecificWords } from "@/filters/filters";
 import { postMethods } from "@/axios/helpers";

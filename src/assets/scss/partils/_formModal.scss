@@ -20,7 +20,8 @@
       max-height: 500px;
     }
     &.questions {
-      max-width: unset;
+      // max-width: unset;
+      max-height: 85vh;
     }
     &.personal-information {
       height: auto;
@@ -31,6 +32,10 @@
     .title {
       color: $secondcolor !important;
       margin-bottom: 30px;
+      line-height: 2;
+      &.titles {
+        color: $headcolor !important;
+      }
     }
     .form-group {
       margin-bottom: 30px;

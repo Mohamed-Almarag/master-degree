@@ -54,6 +54,7 @@ export default {
   async submitExam({ commit }, payload) {
     await postMethods("student/exams/submit", payload).then((response) => {
       commit("SUBMIT_EXAM", response.data);
+      console.log(response.data);
     });
   },
   async getActivities({ commit }, payload) {

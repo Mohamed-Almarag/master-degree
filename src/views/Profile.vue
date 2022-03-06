@@ -79,9 +79,9 @@
               <fa class="icons" icon="phone-alt" />
               <span class="user-info">{{ studentData.phone }}</span>
             </div>
-            <div class="parts">
-              <fa class="icons" icon="eye" />
-              <span class="user-info">بصرى</span>
+            <div class="parts" v-if="studentData.category">
+              <fa class="icons" icon="cog" />
+              <span class="user-info">{{ studentData.category.name }}</span>
             </div>
             <div class="parts change-password">
               <button

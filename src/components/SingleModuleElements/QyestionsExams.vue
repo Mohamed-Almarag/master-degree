@@ -5,14 +5,13 @@
         <fa @click="close" class="edit-icon cancel" icon="times" />
         <div
           class="all-questions"
-          v-for="question in items.questions"
+          v-for="(question, index) in items.questions"
           :key="question.id"
         >
           <div class="every-questions shadow-sm">
-            <h5 class="title">
-              <fa icon="question" class="icons text-white rounded-circle" />{{
-                question.title
-              }}
+            <h5 class="title titles">
+              <span class="span-numbers">{{ index + 1 }}</span>
+              {{ question.title }}
             </h5>
             <div
               class="
@@ -47,13 +46,14 @@
         </div>
         <button class="custom-btn">ارسال</button>
       </form>
+      <loading :loading="loading"></loading>
     </div>
   </transition>
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 export default {
   name: "QyestionsExams",
   props: {
@@ -69,6 +69,7 @@ export default {
     const close = () => {
       emit("close");
     };
+    const loading = ref(false);
     const store = useStore();
     const formData = new FormData();
     const examQuestion = reactive([]);
@@ -78,14 +79,21 @@ export default {
       console.log(optionId);
     }
     function submitExam() {
+      loading.value = true;
       examQuestion.forEach((value, index) => {
         formData.append(`questions[${index}]`, value);
       });
-      store.dispatch("Module/submitExam", formData).then(() => {
-        examQuestion.value = [];
-      });
+      store
+        .dispatch("Module/submitExam", formData)
+        .then(() => {
+          examQuestion.value = [];
+        })
+        .finally(() => {
+          loading.value = false;
+          window.location.reload();
+        });
     }
-    return { close, pushExamResults, submitExam };
+    return { close, pushExamResults, submitExam, loading };
   },
 };
 </script>

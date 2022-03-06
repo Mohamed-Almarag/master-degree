@@ -67,7 +67,7 @@
         <div class="ervery-point">
           <h6 class="point-title">{{ item.point.title }}</h6>
           <p
-            class="links-container active-text"
+            class="links-container active-text another-content-in-content"
             v-html="item.point.description"
           ></p>
         </div>
@@ -155,8 +155,8 @@ export default {
         category_id: categoryId,
       }).then((response) => {
         anotherContentData.value = response.data.data;
-        // let test = response.data.data;
-        // // console.log(test);
+        let test = response.data.data;
+        console.log(test);
         // let showsgow = test.description.includes("a");
         // console.log(showsgow);
       });
@@ -167,7 +167,7 @@ export default {
     }
     onMounted(() => {
       store.dispatch("Module/getCategories");
-      console.log(env);
+      // console.log(env);
       store
         .dispatch("Module/getSingleModuleData", {
           module_id: module_id,
