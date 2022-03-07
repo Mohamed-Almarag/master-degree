@@ -13,7 +13,11 @@
         </p>
         <ul class="social-lists list-unstyled d-flex justify-content-center">
           <li class="item">
-            <a class="link" href="facebbok">
+            <a
+              class="link"
+              href="https://web.facebook.com/profile.php?id=100005000749118"
+              target="_blank"
+            >
               <fa class="icon" :icon="['fab', 'facebook']" />
               <span class="name">الفيسبوك</span>
             </a>

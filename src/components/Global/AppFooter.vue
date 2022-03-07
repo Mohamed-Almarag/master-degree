@@ -44,15 +44,22 @@
         </div>
         <div class="footer-social-media text-md-center col-md-4">
           <h5 class="footer-heading text-capitalize">وسائل التواصل</h5>
-          <span class="footer-icon first-icon d-md-block">
-            <fa :icon="['fab', 'facebook']" />
-          </span>
+          <a
+            href="https://web.facebook.com/profile.php?id=100005000749118"
+            target="_blank"
+          >
+            <span class="footer-icon first-icon d-md-block">
+              <fa :icon="['fab', 'facebook']" />
+            </span>
+          </a>
           <span class="footer-icon first-icon d-md-block">
             <fa :icon="['fab', 'whatsapp']" />
           </span>
-          <span class="footer-icon first-icon d-md-block">
-            <fa icon="phone-alt" />
-          </span>
+          <a class="link" href="tel: 01118357251">
+            <span class="footer-icon first-icon d-md-block">
+              <fa icon="phone-alt" />
+            </span>
+          </a>
         </div>
       </div>
     </div>

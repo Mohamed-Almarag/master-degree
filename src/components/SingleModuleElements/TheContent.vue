@@ -17,6 +17,16 @@
               alt="image"
             />
           </div>
+          <div class="voices mt-4">
+            <audio class="audio-sound d-block mb-3" controls>
+              <source src="../../assets/images/1.mp3" />
+              Your browser does not support the audio element.
+            </audio>
+            <audio class="audio-sound d-block" controls>
+              <source src="../../assets/images/2.mp3" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
         </div>
       </div>
     </transition>
@@ -34,9 +44,19 @@
           <!-- <h5 v-if="anotherContentData == {}">جارى تحميل البيانات</h5> -->
           <h5 class="title text-center">{{ anotherContentData.title }}</h5>
           <p
-            class="active-text another-content-in-content"
+            class="active-text anotherContentData another-content-in-content"
             v-html="anotherContentData.description"
           ></p>
+          <div class="voices mt-4" v-if="anotherContentData.category_id == 8">
+            <audio class="audio-sound d-block mb-3" controls>
+              <source src="../../assets/images/1.mp3" />
+              Your browser does not support the audio element.
+            </audio>
+            <audio class="audio-sound d-block" controls>
+              <source src="../../assets/images/2.mp3" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
         </div>
       </div>
     </transition>
@@ -157,6 +177,7 @@ export default {
         anotherContentData.value = response.data.data;
         let test = response.data.data;
         console.log(test);
+
         // let showsgow = test.description.includes("a");
         // console.log(showsgow);
       });

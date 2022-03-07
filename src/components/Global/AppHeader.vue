@@ -9,7 +9,10 @@
             alt="logo"
             draggable="false"
           />
-          <span class="site-name">بيئة التدريب التكيفية</span>
+          <span class="site-name" v-if="isEnvOne == 0"
+            >بيئة التدريب التكيفية</span
+          >
+          <span class="site-name" v-else>بيئة التدريب القابله للتكيف</span>
         </router-link>
         <button
           class="navbar-toggler"
@@ -118,7 +121,7 @@
 <script>
 // import { useUserInfo } from "@/use/user-info";
 
-import { onMounted, onUnmounted, computed } from "vue";
+import { onMounted, onUnmounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default {
@@ -127,6 +130,7 @@ export default {
     const store = useStore();
     const isLoggedIn = computed(() => store.state.Auth.token);
     const router = useRouter();
+    const isEnvOne = ref("");
     // const { image } = useUserInfo();
     // const img = ref(null);
     // function isimg() {
@@ -157,6 +161,11 @@ export default {
     }
     onMounted(() => {
       window.addEventListener("scroll", handleScroll);
+      let student = JSON.parse(localStorage.getItem("student-data"));
+      if (student) {
+        isEnvOne.value = student.data.env;
+      }
+      // console.log(student.data.env);
     });
     onMounted(() => {
       window.addEventListener("scroll", handleScroll);
@@ -165,7 +174,7 @@ export default {
     onUnmounted(() => {
       window.removeEventListener("scroll", handleScroll);
     });
-    return { handleScroll, logout, isLoggedIn };
+    return { handleScroll, logout, isLoggedIn, isEnvOne };
   },
 };
 </script>
