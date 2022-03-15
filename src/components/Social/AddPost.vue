@@ -2,7 +2,6 @@
   <transition name="fade">
     <div class="form-modal-container clip-path" v-if="show">
       <form
-        @submit.prevent="submitPost"
         action=""
         class="form-modal"
         :class="{ 'add-post': imgPreviewUrl != null }"
@@ -46,7 +45,10 @@
             </div>
           </div>
         </div>
-        <button class="custom-btn d-block">نشر</button>
+        <!-- @submit.prevent="submitPost" -->
+        <button @click="submitPost" class="custom-btn d-block">
+          {{ checkId }}
+        </button>
       </form>
     </div>
   </transition>
@@ -54,14 +56,19 @@
 
 <script>
 import useChangePhoto from "@/use/choose-image";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   name: "AddPost",
+  // props
   props: {
     show: {
       type: Boolean,
       default: false,
+    },
+    addMode: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props, { emit }) {
@@ -73,20 +80,27 @@ export default {
     const knowimg = computed(() => {
       return forChangePhoto.img.value;
     });
+    const getPostId = ref(null);
     const postData = reactive({
       body: null,
       image: knowimg,
     });
-    const fortest = (event) => {
-      emit("fortest", event.target.value);
-      console.log(event.target.value);
-    };
+    const checkId = computed(() => {
+      return props.addMode ? "نشر" : "حفظ";
+    });
+
     function submitPost() {
       let payload = new FormData();
       payload.append("body", postData.body);
       payload.append("image", postData.image);
+      if (!props.addMode) {
+        payload.append("post_id", getPostId.value);
+      }
+      const checkMode = props.addMode
+        ? { name: "Social/addPost" }
+        : { name: "Social/editPost" };
       store
-        .dispatch("Social/addPost", payload)
+        .dispatch(checkMode.name, payload)
         .then((response) => {
           if (response.status == 200) {
             window.location.reload();
@@ -99,13 +113,21 @@ export default {
           console.log(error);
         });
     }
+    function gtePostForEdit(id) {
+      getPostId.value = id;
+      store.dispatch("Social/getPostDataToEDit", id).then((response) => {
+        postData.body = response.body;
+        forChangePhoto.imgPreviewUrl.value = response.image;
+      });
+    }
     return {
-      fortest,
       close,
       ...forChangePhoto,
       postData,
       knowimg,
       submitPost,
+      gtePostForEdit,
+      checkId,
     };
   },
 };

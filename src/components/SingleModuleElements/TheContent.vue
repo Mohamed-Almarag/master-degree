@@ -47,15 +47,18 @@
             class="active-text anotherContentData another-content-in-content"
             v-html="anotherContentData.description"
           ></p>
-          <div class="voices mt-4" v-if="anotherContentData.category_id == 8">
-            <audio class="audio-sound d-block mb-3" controls>
-              <source src="../../assets/images/1.mp3" />
-              Your browser does not support the audio element.
-            </audio>
-            <audio class="audio-sound d-block" controls>
-              <source src="../../assets/images/2.mp3" />
-              Your browser does not support the audio element.
-            </audio>
+          <div class="all-audios" v-if="anotherContentData.files">
+            <div
+              class="every-audio"
+              v-for="audio in anotherContentData.files"
+              :key="audio.id"
+            >
+              <h6 class="audio-title mb-3">{{ audio.title }}</h6>
+              <audio class="audio-sound" controls>
+                <source :src="audio.file" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
           </div>
         </div>
       </div>

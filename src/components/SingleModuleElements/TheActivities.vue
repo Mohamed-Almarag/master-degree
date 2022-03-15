@@ -21,7 +21,10 @@
         </div>
       </div>
       <div class="active-comments">
-        <button @click="toogleComment(active.id)" class="d-block add-answer">
+        <button
+          @click="toogleComment(active.id)"
+          class="d-block add-answer-comment"
+        >
           <fa class="comment-icon" icon="comment" />
           <span>اضف اجابتك على النشاط</span>
         </button>
@@ -352,22 +355,6 @@ export default {
       .all-comments-container {
         max-height: 300px;
         overflow: auto;
-      }
-      .add-answer {
-        border: none;
-        color: $textcolor;
-        padding: 10px;
-        width: 300px;
-        background-color: $bgcard;
-        border-radius: $radius;
-        transition: $transition;
-        &:hover {
-          background-color: $maincolor;
-          color: $white;
-        }
-        .comment-icon {
-          margin: 0 0 0 15px;
-        }
       }
       // the activites replaies
       .replies {
