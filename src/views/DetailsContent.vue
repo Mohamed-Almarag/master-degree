@@ -9,9 +9,9 @@
       :linkName="link"
       :modules="modules"
     ></educational-modules>
-    <router-link :to="{ name: 'LearningStyle' }"
+    <!-- <router-link :to="{ name: 'LearningStyle' }"
       >تحديد أسلوب التعلم</router-link
-    >
+    > -->
   </div>
 </template>
 

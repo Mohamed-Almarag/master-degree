@@ -10,20 +10,28 @@
           <h3 class="title text-center">{{ contentPopupData.title }}</h3>
 
           <p class="active-text">{{ contentPopupData.description }}</p>
-          <div class="img-container" v-if="contentPopupData.image">
+          <div
+            class="img-container"
+            v-if="
+              !contentPopupData.image.endsWith('mp3') &&
+              contentPopupData.image != null
+            "
+          >
             <img
               class="w-100 m-100 img"
               :src="contentPopupData.image"
               alt="image"
             />
           </div>
-          <div class="voices mt-4">
+          <div
+            class="voices mt-4"
+            v-if="
+              contentPopupData.image.endsWith('mp3') &&
+              contentPopupData.image != null
+            "
+          >
             <audio class="audio-sound d-block mb-3" controls>
-              <source src="../../assets/images/1.mp3" />
-              Your browser does not support the audio element.
-            </audio>
-            <audio class="audio-sound d-block" controls>
-              <source src="../../assets/images/2.mp3" />
+              <source :src="contentPopupData.image" />
               Your browser does not support the audio element.
             </audio>
           </div>
