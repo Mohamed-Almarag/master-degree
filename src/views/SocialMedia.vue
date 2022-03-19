@@ -27,6 +27,13 @@
           :savebtntext="savebtntext"
           :typeelement="typeelements"
         ></ConfirmationModal>
+        <ConfirmationModal
+          :cancel="cancelDeleteReply"
+          :sure="deleteReply"
+          :showConfirm="showReplyConfirm"
+          :savebtntext="savebtntext"
+          :typeelement="typeelementss"
+        ></ConfirmationModal>
 
         <!-- START POST CONTAINER  -->
         <div
@@ -186,7 +193,7 @@
                               <div class="main-input-container for-update">
                                 <input
                                   @keyup.enter="updateComment(comment.id)"
-                                  v-model="commentData.body"
+                                  v-model="commentData.comment_reply"
                                   class="w-100 comment-input"
                                   type="text"
                                 />
@@ -195,52 +202,165 @@
                           </div>
                         </transition>
                       </div>
-                      <!-- Start Replaies  -->
-                      <div class="all-comment-replies">
-                        <span @click="toogleReplay(comment.id)">رد</span>
-                        <transition name="fade">
+                      <!-- Start  all replaies -->
+                      <div class="all-replies-container" v-if="comment.replies">
+                        <div class="all-replies">
                           <div
-                            class="clip-path"
-                            v-if="replay && replay_id == comment.id"
+                            class="main-content-of-post d-flex"
+                            v-for="reply in comment.replies"
+                            :key="reply.id"
                           >
-                            <!-- <div class="our-comment">
-                              <div class="main-input-container">
-                                <input
-                                  @keyup.enter="updateComment(comment.id)"
-                                  v-model="commentData.body"
-                                  class="w-100 comment-input"
-                                  type="text"
-                                />
-                              </div>
-                            </div> -->
-                            <div class="d-flex our-comment align-items-center">
-                              <div class="part-one-photo" v-if="image">
-                                <img
-                                  v-if="image"
-                                  :src="image"
-                                  class="img rounded-circle"
-                                  :alt="name"
-                                />
-                                <img
-                                  v-else
-                                  src="@/assets/images/default.png"
-                                  class="img rounded-circle"
-                                  alt="student"
-                                />
-                              </div>
-                              <div class="main-input-container">
-                                <input
-                                  @keyup.enter="submitComment(post.id)"
-                                  v-model="commentData.body"
-                                  class="w-100 comment-input"
-                                  type="text"
-                                />
+                            <div class="part-one-photo">
+                              <img
+                                v-if="reply.user.image"
+                                :src="reply.user.image"
+                                class="img rounded-circle"
+                                :alt="reply.user.name"
+                              />
+                              <img
+                                v-else
+                                src="@/assets/images/default.png"
+                                class="img rounded-circle"
+                                alt="student"
+                              />
+                            </div>
+                            <div class="part-two-texts">
+                              <div class="content-comment">
+                                <div
+                                  class="
+                                    title-and-dropdown
+                                    d-flex
+                                    justify-content-between
+                                  "
+                                >
+                                  <span class="d-block title">{{
+                                    reply.user.name
+                                  }}</span>
+                                  <div
+                                    class="dropdown"
+                                    v-if="reply.user.id == id"
+                                  >
+                                    <button
+                                      class="btn btn-secondary dropdown-toggle"
+                                      type="button"
+                                      id="dropdownMenuButton"
+                                      data-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      ...
+                                    </button>
+                                    <ul
+                                      class="dropdown-menu"
+                                      aria-labelledby="dropdownMenuButton"
+                                    >
+                                      <li class="li-item">
+                                        <!-- getCommentToEdit(
+                                                post.id,
+                                                comment.id
+                                              ) -->
+                                        <a
+                                          @click="
+                                            toggleUpdateReplyBox(reply.id),
+                                              getReplyToEdit(
+                                                post.id,
+                                                comment.id,
+                                                reply.id
+                                              )
+                                          "
+                                          class="dropdown-item"
+                                          href="javascript:void(0)"
+                                          >تعديل الرد</a
+                                        >
+                                      </li>
+
+                                      <li class="li-item">
+                                        <a
+                                          @click="
+                                            showDeleteReplyConfirm(reply.id)
+                                          "
+                                          class="dropdown-item"
+                                          href="javascript:void(0)"
+                                          >حذف الرد</a
+                                        >
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                <p class="text-comment-body">
+                                  {{ reply.body }}
+                                </p>
+                                <transition name="fade">
+                                  <div
+                                    class="edit-post clip-path"
+                                    v-if="
+                                      update_for_reply &&
+                                      update_replay_id == reply.id
+                                    "
+                                  >
+                                    <div class="our-comment">
+                                      <div
+                                        class="main-input-container for-update"
+                                      >
+                                        <input
+                                          @keyup.enter="updateReply(reply.id)"
+                                          v-model="commentData.body_reply"
+                                          class="w-100 comment-input"
+                                          type="text"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </transition>
                               </div>
                             </div>
                           </div>
-                        </transition>
+                        </div>
+                        <!-- Start Replaies  -->
+                        <div class="all-comment-replies">
+                          <span
+                            class="span-reply"
+                            @click="toogleReplay(comment.id)"
+                            >رد</span
+                          >
+                          <transition name="fade">
+                            <div
+                              class="clip-path"
+                              v-if="replay && replay_id == comment.id"
+                            >
+                              <div
+                                class="d-flex our-comment align-items-center"
+                              >
+                                <div class="part-one-photo" v-if="image">
+                                  <img
+                                    v-if="image"
+                                    :src="image"
+                                    class="img rounded-circle"
+                                    :alt="name"
+                                  />
+                                  <img
+                                    v-else
+                                    src="@/assets/images/default.png"
+                                    class="img rounded-circle"
+                                    alt="student"
+                                  />
+                                </div>
+                                <div class="main-input-container">
+                                  <input
+                                    @keyup.enter="
+                                      submitReply(post.id, comment.id)
+                                    "
+                                    v-model="commentData.body"
+                                    class="w-100 comment-input"
+                                    type="text"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </transition>
+                          <!-- End Replaies  -->
+                        </div>
                       </div>
-                      <!-- End Replaies  -->
+                      <!-- End all replaies -->
                     </div>
                   </div>
                 </div>
@@ -309,6 +429,10 @@ export default {
       post_id: null,
       body: null,
       comment_id: null,
+      parent_id: null,
+      // For Edit Comment or Reply
+      comment_reply: null,
+      body_reply: null,
     });
     const update_for_comment = ref(false);
     const update_comment_id = ref(null);
@@ -321,6 +445,14 @@ export default {
     // Replies
     const replay = ref(false);
     const replay_id = ref(null);
+    const update_for_reply = ref(false);
+    const update_replay_id = ref(null);
+    const showReplyConfirm = ref(false);
+    const getReplyId = ref(null);
+    const typeelementss = ref("الرد");
+    const everyReplyId = computed(() => {
+      return getReplyId.value;
+    });
     // End Comments And Replies
 
     const posts = computed(() => {
@@ -384,7 +516,7 @@ export default {
             let comments = item.comments;
             comments.filter((com) => {
               if (com.id == commentid) {
-                commentData.body = com.body;
+                commentData.comment_reply = com.body;
               }
             });
           }
@@ -394,9 +526,9 @@ export default {
     function updateComment(id) {
       let payload = new FormData();
       payload.append("comment_id", id);
-      payload.append("body", commentData.body);
+      payload.append("body", commentData.comment_reply);
       store.dispatch("Social/editComment", payload).then(() => {
-        commentData.body = null;
+        commentData.comment_reply = null;
         update_for_comment.value = false;
         store.dispatch("Social/getPosts");
       });
@@ -421,6 +553,66 @@ export default {
     function toogleReplay(id) {
       replay_id.value = id;
       replay.value = !replay.value;
+    }
+    function toggleUpdateReplyBox(id) {
+      update_replay_id.value = id;
+      update_for_reply.value = !this.update_for_reply;
+    }
+    function submitReply(post_id, reply_id) {
+      let payload = new FormData();
+      payload.append("post_id", post_id);
+      payload.append("body", commentData.body);
+      payload.append("parent_id", reply_id);
+      store.dispatch("Social/addComment", payload).then(() => {
+        commentData.body = null;
+        store.dispatch("Social/getPosts");
+      });
+    }
+    function getReplyToEdit(id, commentid, reply_id) {
+      store.dispatch("Social/getPosts").then((response) => {
+        let data = response.data.data;
+        data.find((item) => {
+          if (item.id == id) {
+            let comments = item.comments;
+            comments.filter((com) => {
+              if (com.id == commentid) {
+                let replies = com.replies;
+                replies.find((rep) => {
+                  if (rep.id == reply_id) {
+                    commentData.body_reply = rep.body;
+                  }
+                });
+              }
+            });
+          }
+        });
+      });
+    }
+    function updateReply(id) {
+      let payload = new FormData();
+      payload.append("comment_id", id);
+      payload.append("body", commentData.body_reply);
+      store.dispatch("Social/editComment", payload).then(() => {
+        commentData.body_reply = null;
+        update_for_reply.value = false;
+        store.dispatch("Social/getPosts");
+      });
+    }
+    function showDeleteReplyConfirm(id) {
+      showReplyConfirm.value = !showReplyConfirm.value;
+      getReplyId.value = id;
+    }
+    function deleteReply() {
+      store
+        .dispatch("Social/deleteComment", { comment_id: everyReplyId.value })
+        .then(() => {
+          showReplyConfirm.value = !showReplyConfirm.value;
+          store.dispatch("Social/getPosts");
+        });
+    }
+    function cancelDeleteReply() {
+      showReplyConfirm.value = !showReplyConfirm.value;
+      getReplyId.value = null;
     }
     // End For Comments And Replay
     return {
@@ -462,7 +654,19 @@ export default {
       // Replay
       replay,
       replay_id,
+      update_replay_id,
+      update_for_reply,
       toogleReplay,
+      toggleUpdateReplyBox,
+      submitReply,
+      showDeleteReplyConfirm,
+      cancelDeleteReply,
+      deleteReply,
+      showReplyConfirm,
+      typeelementss,
+      everyReplyId,
+      getReplyToEdit,
+      updateReply,
     };
   },
 };

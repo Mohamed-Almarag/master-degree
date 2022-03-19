@@ -64,8 +64,6 @@ export default {
     }
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;
-      console.log(questionId);
-      console.log(optionId);
     }
     function showExam() {
       show.value = !show.value;

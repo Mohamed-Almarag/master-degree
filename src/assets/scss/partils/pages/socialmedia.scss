@@ -118,6 +118,9 @@
       .main-content-of-post {
         padding: 5px;
         gap: 7px;
+        &:first-of-type {
+          margin-top: 5px;
+        }
         .part-one-photo {
           .img {
             width: 40px;
@@ -166,5 +169,8 @@
       background-color: $white;
     }
   }
+}
+.span-reply {
+  cursor: pointer;
 }
 // End Post Comments And Replies

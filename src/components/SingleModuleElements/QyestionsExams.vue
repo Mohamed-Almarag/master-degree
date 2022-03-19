@@ -75,8 +75,6 @@ export default {
     const examQuestion = reactive([]);
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;
-      console.log(questionId);
-      console.log(optionId);
     }
     function submitExam() {
       loading.value = true;
@@ -90,7 +88,10 @@ export default {
         })
         .finally(() => {
           loading.value = false;
-          window.location.reload();
+          // props.show = !props.show;
+          // props.show = false;
+          console.log(props.show);
+          // window.location.reload();
         });
     }
     return { close, pushExamResults, submitExam, loading };
