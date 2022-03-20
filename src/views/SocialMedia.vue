@@ -43,7 +43,7 @@
         >
           <!-- start part one post header  -->
           <div class="header d-flex justify-content-between align-items-center">
-            <div class="post-author d-flex align-items-center">
+            <div class="post-author d-flex align-items-center" v-if="post.user">
               <img
                 v-if="post.user.image"
                 class="author-image rounded-circle d-block"
@@ -59,7 +59,7 @@
 
               <h5 class="author-name">{{ post.user.name }}</h5>
             </div>
-            <div class="post-actions" v-if="id == post.user.id">
+            <div class="post-actions" v-if="post.user_id == id">
               <div class="dropdown">
                 <button
                   class="btn btn-secondary dropdown-toggle"
@@ -93,7 +93,7 @@
           </div>
           <!-- end part one post header  -->
           <!-- start part two post body  -->
-          <div class="body">
+          <div class="body" v-if="post">
             <p class="active-text">{{ post.body }}</p>
             <img class="img" :src="post.image" alt="" />
           </div>
@@ -117,7 +117,7 @@
                   v-for="comment in post.comments"
                   :key="comment.id"
                 >
-                  <div class="main-content-of-post d-flex mb-1">
+                  <div v-if="comment" class="main-content-of-post d-flex mb-1">
                     <div class="part-one-photo" v-if="comment.user">
                       <img
                         v-if="comment.user.image"
@@ -210,7 +210,7 @@
                             v-for="reply in comment.replies"
                             :key="reply.id"
                           >
-                            <div class="part-one-photo">
+                            <div class="part-one-photo" v-if="reply.user">
                               <img
                                 v-if="reply.user.image"
                                 :src="reply.user.image"
@@ -330,9 +330,9 @@
                               <div
                                 class="d-flex our-comment align-items-center"
                               >
-                                <div class="part-one-photo" v-if="image">
+                                <div class="part-one-photo">
                                   <img
-                                    v-if="image"
+                                    v-if="image !== null"
                                     :src="image"
                                     class="img rounded-circle"
                                     :alt="name"
@@ -366,9 +366,9 @@
                 </div>
                 <div class="add-comment">
                   <div class="d-flex our-comment align-items-center">
-                    <div class="part-one-photo" v-if="image">
+                    <div class="part-one-photo">
                       <img
-                        v-if="image"
+                        v-if="image !== null"
                         :src="image"
                         class="img rounded-circle"
                         :alt="name"
@@ -461,8 +461,17 @@ export default {
     const everyPostId = computed(() => {
       return getPostId.value;
     });
+    // const name = ref(null);
+    // const id = ref(null);
+    // const image = ref(null);
+    // , id, image
     onMounted(() => {
       store.dispatch("Social/getPosts");
+      // let userData = JSON.parse(localStorage.getItem("student-data")).data;
+      // name.value = userData.name;
+      // id.value = userData.id;
+      // image.value = userData.image;
+      // console.log(userData.id);
     });
     // Start for Post [ ADD -  EDIT - DELETE]
     function showAddPost() {
