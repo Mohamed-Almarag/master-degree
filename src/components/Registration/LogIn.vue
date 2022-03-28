@@ -71,16 +71,14 @@ export default {
       let payload = new FormData();
       payload.append("email", userData.email);
       payload.append("password", userData.password);
-      store
-        .dispatch("Auth/signIn", payload)
-        .then(() => {
-          router.push({ name: "Home" });
-        })
-        .finally(() => {
-          // if (route.name == "Home") {
-          //   }
-          window.location.reload();
-        });
+      store.dispatch("Auth/signIn", payload).then(() => {
+        router.push({ name: "Home" });
+      });
+      // .finally(() => {
+      //   // if (route.name == "Home") {
+      //   //   }
+      //   // window.location.reload();
+      // });
     }
     return {
       ...toRefs(userData),

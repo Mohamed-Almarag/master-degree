@@ -45,7 +45,8 @@ export default {
     const store = useStore();
     const examQuestion = reactive([]);
     const formData = new FormData();
-    const show = ref(false);
+    const show = ref(true);
+
     const moduleExams = computed(() => {
       return store.state.Module.exams;
     });
@@ -58,9 +59,6 @@ export default {
       store.dispatch("Module/getModuleExamQuetions", {
         exam_id: id,
       });
-      // .then(() => {
-      //   show.value = !show.value;
-      // });
     }
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;

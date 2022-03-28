@@ -46,6 +46,7 @@
         </div>
         <button class="custom-btn">ارسال</button>
       </form>
+
       <loading :loading="loading"></loading>
     </div>
   </transition>
@@ -59,7 +60,7 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     items: {
       type: Object,
@@ -76,6 +77,7 @@ export default {
     function pushExamResults(questionId, optionId) {
       examQuestion[questionId] = optionId;
     }
+    const hideQuestions = ref(false);
     function submitExam() {
       loading.value = true;
       examQuestion.forEach((value, index) => {
@@ -88,13 +90,16 @@ export default {
         })
         .finally(() => {
           loading.value = false;
-          // props.show = !props.show;
-          // props.show = false;
-          console.log(props.show);
-          // window.location.reload();
+          window.location.reload();
         });
     }
-    return { close, pushExamResults, submitExam, loading };
+    return {
+      close,
+      pushExamResults,
+      submitExam,
+      loading,
+      hideQuestions,
+    };
   },
 };
 </script>

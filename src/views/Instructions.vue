@@ -25,12 +25,12 @@
           <h6>وإليك دليل استخدام البيئة:</h6>
 
           <a
-            class="d-block download"
-            href="@/assets/images/env.pdf"
+            class="d-block download link-drive"
+            href="https://drive.google.com/file/d/1KUqrm8kZzHCsFk-eCfEV2e4NzzRoY4A6/view?usp=sharing"
             download="env-1.pdf"
             target="_blank"
           >
-            <span>تحميل</span>
+            <span class="show">عرض</span>
             <fa class="icon" icon="download" />
           </a>
         </div>
@@ -77,12 +77,12 @@
           <h6>وإليك دليل استخدام البيئة:</h6>
 
           <a
-            class="d-block download"
-            href="@/assets/images/env.pdf"
+            class="d-block download link-drive"
+            href="https://drive.google.com/file/d/1tF6-JHL4bujzmHVvvgXtPGEVZEVnML6A/view?usp=sharing"
             download="env-1.pdf"
             target="_blank"
           >
-            <span>تحميل</span>
+            <span class="show">عرض</span>
             <fa class="icon" icon="download" />
           </a>
         </div>
@@ -156,6 +156,23 @@ export default {
         border-bottom: 1px solid $bordercolor;
       }
     }
+  }
+}
+.link-drive {
+  color: $textcolor;
+  box-shadow: $box-shadow;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: $transition;
+  background-color: $white;
+  &:hover {
+    color: $white;
+    background-color: $maincolor;
+  }
+  .show {
+    margin-left: 5px;
   }
 }
 </style>
